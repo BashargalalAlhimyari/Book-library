@@ -41,7 +41,6 @@ class _listViewBlocBuilderState extends State<listViewBlocConsumer> {
             state is BooksCubitPaginationFailure) {
           return CostumListViewItems(books: books);
         } else if (state is BooksCubitDartFailure) {
-          print(state.errMessage);
           return Text(state.errMessage);
         } else {
           return const Center(child: CircularProgressIndicator());

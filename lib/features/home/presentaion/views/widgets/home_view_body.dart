@@ -3,7 +3,7 @@ import 'package:clean_architecture/features/home/presentaion/manager/featuredNew
 import 'package:clean_architecture/features/home/presentaion/views/widgets/appbar_widget.dart';
 import 'package:clean_architecture/features/home/presentaion/views/widgets/best_seller_listview_consumer.dart';
 import 'package:clean_architecture/features/home/presentaion/views/widgets/list_view_bloc_consumer.dart';
-import 'package:clean_architecture/l10n/app_localizations.dart';
+import 'package:clean_architecture/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,10 +34,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       if (!isLoading) {
         isLoading = true;
         try {
-          await BlocProvider.of<NewsBooksCubit>(
-            context,
-          ).fetchNewsBooks(pageNumber: nextPage++);
-          print('nextPage: $nextPage');
+          await context.read<NewsBooksCubit>().fetchNewsBooks(pageNumber: nextPage++);
         } catch (e) {
           print(e);
         }

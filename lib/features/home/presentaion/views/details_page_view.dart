@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
-import 'package:clean_architecture/core/widgets/custom_button.dart';
+import 'package:clean_architecture/core/widgets/buttons/custom_button.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 
 import 'package:clean_architecture/features/home/presentaion/views/widgets/listview_items.dart';

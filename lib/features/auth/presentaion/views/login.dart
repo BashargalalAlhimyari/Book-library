@@ -1,5 +1,5 @@
-import 'package:clean_architecture/core/utils/routes/appRouters.dart';
-import 'package:clean_architecture/core/utils/routes/paths_routes.dart';
+import 'package:clean_architecture/core/routes/appRouters.dart';
+import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

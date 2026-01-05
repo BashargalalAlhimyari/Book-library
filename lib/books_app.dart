@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'l10n/app_localizations.dart'; // تأكد من المسار
-import 'core/utils/routes/appRouters.dart';
+import 'core/l10n/app_localizations.dart'; // تأكد من المسار
+import 'core/routes/appRouters.dart';
 import 'core/utils/manager/locale_cubit.dart';
 import 'core/functions/app_bloc_providers.dart'; // الملف الذي أنشأناه سابقاً
 

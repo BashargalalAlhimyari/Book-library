@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 
 class BooksModel extends BookEntity {
@@ -18,7 +19,6 @@ class BooksModel extends BookEntity {
 
   factory BooksModel.fromJson(Map<String, dynamic> json) {
     // Base URL for images
-    const String uploadsBaseUrl = 'http://10.102.217.22:3000/uploads/';
     
     return BooksModel(
       id: json['id'] ?? 0,
@@ -30,9 +30,9 @@ class BooksModel extends BookEntity {
           : [],
       description: json['description'],
       image: json['thumbnail'] != null 
-          ? uploadsBaseUrl + json['thumbnail']
+          ? EndPoint.uploadsBaseUrl + json['thumbnail']
           : (json['image'] != null 
-              ? uploadsBaseUrl + json['image']
+              ? EndPoint.uploadsBaseUrl + json['image']
               : null),
       categories: json['categories'] != null
           ? (json['categories'] is String

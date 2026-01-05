@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clean_architecture/core/constants/assets.dart';
-import 'package:clean_architecture/core/utils/routes/paths_routes.dart';
+import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/manager/featuredBooksCubit/books_cubit.dart';
 import 'package:flutter/material.dart';

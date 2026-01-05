@@ -1,5 +1,5 @@
 import 'package:clean_architecture/core/constants/assets.dart';
-import 'package:clean_architecture/core/utils/routes/paths_routes.dart';
+import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/features/splash/presentaion/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

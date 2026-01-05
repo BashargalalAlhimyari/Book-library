@@ -8,6 +8,7 @@ import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.d
 import 'package:clean_architecture/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:clean_architecture/features/home/data/data_sources/remote_data_source.dart';
 import 'package:clean_architecture/features/home/data/repos/home_repo_impl.dart';
+import 'package:clean_architecture/features/home/presentaion/manager/featuredBooksCubit/books_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,30 +20,37 @@ void setupServiceLocator() {
 
   // Features - Auth
   // Bloc
-  getIt.registerFactory<AuthCubit>(() => AuthCubit(
-        loginUseCase: getIt(),
-        registerUseCase: getIt(),
-      ));
+  getIt.registerFactory<AuthCubit>(
+    () => AuthCubit(loginUseCase: getIt(), registerUseCase: getIt()),
+  );
 
-    // Use Cases
-    getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()));
-    getIt.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(getIt()));
+  // Use Cases
+  getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()));
+  getIt.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(getIt()));
 
   // Repository
   getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(getIt()));
 
   // Data Source
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(getIt()));
-
+    () => AuthRemoteDataSourceImpl(getIt()),
+  );
 
   // Features - Home
+  // Bloc
+  getIt.registerFactory<BooksCubitDartCubit>(
+    () => BooksCubitDartCubit( getIt()),
+  );
   getIt.registerLazySingleton<HomeLocalDataSource>(
-      () => HomeLocalDataSourceImpl());
+    () => HomeLocalDataSourceImpl(),
+  );
   getIt.registerLazySingleton<HomeRemoteDataSource>(
-      () => HomeRemoteDataSourceImpl(apiService: getIt()));
-  getIt.registerLazySingleton<HomeRepoImpl>(() => HomeRepoImpl(
-        homeRemoteDataSource: getIt(),
-        homeLocalDataSource: getIt(),
-      ));
+    () => HomeRemoteDataSourceImpl(apiService: getIt()),
+  );
+  getIt.registerLazySingleton<HomeRepoImpl>(
+    () => HomeRepoImpl(
+      homeRemoteDataSource: getIt(),
+      homeLocalDataSource: getIt(),
+    ),
+  );
 }

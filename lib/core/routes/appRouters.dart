@@ -1,4 +1,6 @@
-import 'package:clean_architecture/core/utils/routes/paths_routes.dart';
+import 'package:clean_architecture/core/routes/authGuard.dart';
+import 'package:clean_architecture/core/utils/token_storage.dart';
+import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/features/auth/presentaion/views/login.dart';
 import 'package:clean_architecture/features/auth/presentaion/views/sign_up.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
@@ -9,13 +11,13 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRouters {
   static final routers = GoRouter(
+    redirect: (context, state) => RouterAuthGuard.handleRedirect(context, state),
+
     routes: [
-      // GoRoute(path: '/', builder: (context, state) => const SplashView()),
-      GoRoute(path: '/', builder: (context, state) => const LoginView()),
+       GoRoute(path: '/', builder: (context, state) => const SplashView()),
+      GoRoute(path: Routes.loginPage, builder: (context, state) => const LoginView()),
       GoRoute(path: Routes.signUp, builder: (context, state) => const SignUpView()),
-      GoRoute(
-        path: Routes.homePage,
-        builder: (context, state) => const HomeView(),
+      GoRoute(  path: Routes.homePage,builder: (context, state) => const HomeView(),
       ),
       GoRoute(
         path: Routes.detailsPage,

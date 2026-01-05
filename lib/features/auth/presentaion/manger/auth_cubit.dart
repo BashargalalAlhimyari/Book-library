@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:clean_architecture/core/utils/token_storage.dart';
 import 'package:clean_architecture/features/auth/domain/entity/auth_entity.dart';
 import 'package:clean_architecture/features/auth/domain/user_cases/login_usecase.dart';
 import 'package:clean_architecture/features/auth/domain/user_cases/register_usecase.dart';
@@ -17,7 +18,10 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await loginUseCase(LoginParams(email: email, password: password));
     result.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess(user: user)),
+      (user) async {
+        await TokenStorage.saveToken(user.token);
+        emit(AuthSuccess(user: user));
+      },
     );
   }
 
@@ -26,7 +30,15 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await registerUseCase(RegisterParams(username: username, email: email, password: password));
     result.fold(
       (failure) => emit(AuthFailure(message: failure.message)),
-      (user) => emit(AuthSuccess(user: user)),
+      (user) async {
+        await TokenStorage.saveToken(user.token);
+        emit(AuthSuccess(user: user));
+      },
     );
+  }
+
+  Future<void> logout() async {
+    await TokenStorage.deleteToken();
+    emit(AuthInitial());
   }
 }

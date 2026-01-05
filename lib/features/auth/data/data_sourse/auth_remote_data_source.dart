@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/core/network/api_service.dart';
 import 'package:clean_architecture/features/auth/data/models/auth_model.dart';
 
@@ -14,7 +15,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<AuthModel> login({required String email, required String password}) async {
     final response = await apiService.post(
-      endpoint: '/auth/login',
+      endpoint: EndPoint.loginEndpoint,
       data: {
         'email': email,
         'password': password,
@@ -26,7 +27,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<AuthModel> register({required String username, required String email, required String password}) async {
     final response = await apiService.post(
-      endpoint: '/auth/register',
+      endpoint: EndPoint.registerEndpoint,
       data: {
         'username': username,
         'email': email,

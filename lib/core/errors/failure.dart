@@ -43,8 +43,10 @@ class ServerFailure extends Failure {
       );
     } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       // Handle different response structures if needed
-      if (response is Map && response['error'] != null && response['error']['message'] != null) {
-         return ServerFailure(message: response['error']['message']);
+      if (response is Map &&
+          response['error'] != null &&
+          response['error']['message'] != null) {
+        return ServerFailure(message: response['error']['message']);
       }
       return ServerFailure(message: response.toString());
     } else {
