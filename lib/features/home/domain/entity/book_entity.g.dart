@@ -17,12 +17,12 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BookEntity(
-      bookId: fields[0] != null ? fields[0] as String : '',
-      image: fields[1] !=null ? fields[1] as String : '',
-      title: fields[2] != null ? fields[2] as String : '',
-      authOrName: fields[3] != null ? fields[3] as String : '',
-      descrption: fields[4] !=null ? fields[4] as String : '',
-      categories: fields[5] != null ? (fields[5] as List).cast<String>() : [],
+      descrption: fields[4] as String?,
+      bookId: fields[0] as String,
+      images: (fields[6] as List?)?.cast<String>(),
+      title: fields[2] as String,
+      authOrName: fields[3] as String?,
+      categories: (fields[5] as List?)?.cast<String>(),
     );
   }
 
@@ -32,8 +32,8 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       ..writeByte(6)
       ..writeByte(0)
       ..write(obj.bookId)
-      ..writeByte(1)
-      ..write(obj.image)
+      ..writeByte(6)
+      ..write(obj.images)
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)

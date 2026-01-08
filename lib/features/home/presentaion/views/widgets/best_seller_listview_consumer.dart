@@ -21,11 +21,12 @@ class _BestSellerListViewWidgetsState extends State<BestSellerListViewWidgets> {
       listener: (context, state) {
         if (state is NewsBooksSuccess) {
           for (var book in state.books) {
-            if (!books.any((existingBook) => existingBook.bookId == book.bookId)) {
+            if (!books.any(
+              (existingBook) => existingBook.bookId == book.bookId,
+            )) {
               books.add(book);
             }
           }
-          print("✅ GET ${books.length} successful %%%%%%%%%%%%%%%%%%%");
         }
 
         if (state is NewsBooksCubitPaginationFailure) {
@@ -40,7 +41,9 @@ class _BestSellerListViewWidgetsState extends State<BestSellerListViewWidgets> {
             state is NewsBooksCubitPaginationFailure) {
           return homeViewItem(books: books);
         } else if (state is NewsBooksFailure) {
-          return Text(state.errMessage);
+          return Center(
+            child: Icon(Icons.error, size: 50, color: Colors.yellow),
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(color: Colors.amber),

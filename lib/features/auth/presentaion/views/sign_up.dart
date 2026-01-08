@@ -1,5 +1,7 @@
+import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/routes/appRouters.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
+import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,31 +59,22 @@ class _SignUpViewState extends State<SignUpView> {
           return Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                colors: [
-                  Color(0xFF1e3c72),
-                  Color(0xFF2a5298),
-                ],
-              ),
+              gradient: AppColors.primaryGradient,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 80),
-                const Padding(
-                  padding: EdgeInsets.all(20),
+                Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("إنشاء حساب",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
+                          style: Styles.textStyle40.copyWith(color: Colors.white)),
+                      const SizedBox(height: 10),
                       Text("سجل حساب جديد للمتابعة",
-                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                          style: Styles.textStyle18.copyWith(color: Colors.white)),
                     ],
                   ),
                 ),
@@ -150,14 +143,13 @@ class _SignUpViewState extends State<SignUpView> {
                                 onPressed: _handleRegister,
                                 height: 50,
                                 minWidth: double.infinity,
-                                color: const Color(0xFF1e3c72),
+                                color: AppColors.primary,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50)),
-                                child: const Text("إنشاء حساب",
-                                    style: TextStyle(
+                                child: Text("إنشاء حساب",
+                                    style: Styles.textStyle16.copyWith(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
+                                        fontWeight: FontWeight.bold)),
                               ),
                             const SizedBox(height: 20),
                             Row(
@@ -169,9 +161,9 @@ class _SignUpViewState extends State<SignUpView> {
                                   onPressed: () {
                                     GoRouter.of(context).pop();
                                   },
-                                  child: const Text("سجل الدخول",
-                                      style: TextStyle(
-                                          color: Color(0xFF1e3c72),
+                                  child: Text("سجل الدخول",
+                                      style: Styles.textStyle14.copyWith(
+                                          color: AppColors.primary,
                                           fontWeight: FontWeight.bold)),
                                 ),
                               ],
@@ -203,11 +195,11 @@ class _SignUpViewState extends State<SignUpView> {
       controller: controller,
       obscureText: isPassword && !isPasswordVisible,
       validator: validator,
-      style: const TextStyle(color: Colors.black),
+      style: Styles.textStyle14.copyWith(color: Colors.black),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(color: Colors.grey),
-        prefixIcon: Icon(icon, color: const Color(0xFF1e3c72)),
+        labelStyle: Styles.textStyle14.copyWith(color: Colors.grey),
+        prefixIcon: Icon(icon, color: AppColors.primary),
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(

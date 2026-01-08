@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/constants/app/app_constants.dart';
 import 'package:clean_architecture/core/constants/constants.dart';
 import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/core/functions/save_books.dart';
@@ -6,8 +7,8 @@ import 'package:clean_architecture/features/home/data/models/books_model/books_m
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<List<BookEntity>> fetchBooks({int pageNumber = 0});
-  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = 0});
+  Future<List<BookEntity>> fetchBooks({int pageNumber = AppConstants.itemsPerPage});
+  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage});
 }
 
 class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
@@ -16,10 +17,12 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   HomeRemoteDataSourceImpl({required this.apiService});
 
   @override
-  Future<List<BookEntity>> fetchBooks({int pageNumber = 0}) async {
-
-    var data = await apiService.get(endpoint: "${EndPoint.booksEndpoint}${EndPoint.booksEndpoint}?page=$pageNumber&limit=10");
-
+  Future<List<BookEntity>> fetchBooks({int pageNumber = AppConstants.itemsPerPage}) async {
+    var data = await apiService.get(
+      endpoint:
+          "${EndPoint.booksEndpoint}?page=$pageNumber&limit=${AppConstants.itemsPerPage}",
+    );
+    print(data);
     List<BookEntity> books = getBooksList(data);
 
     saveBooks(books, keyFeaturedBox);
@@ -28,10 +31,11 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   }
 
   @override
-  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = 0}) async {
+  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage}) async {
     var data = await apiService.get(
-      endpoint: "${EndPoint.booksEndpoint}?page=$pageNumber&limit=5",
+      endpoint: "${EndPoint.booksEndpoint}?page=$pageNumber&limit=${AppConstants.itemsPerPage}&sort=newest",
     );
+
     List<BookEntity> books = getBooksList(data);
     saveBooks(books, keyFeaturedNewsBox);
     return books;

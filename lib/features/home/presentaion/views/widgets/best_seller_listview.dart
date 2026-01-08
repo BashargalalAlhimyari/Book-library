@@ -19,7 +19,6 @@ class _homeViewItemState extends State<homeViewItem> {
 
   @override
   Widget build(BuildContext context) {
-    print("✅ GET ${widget.books!.length} successful ====================");
 
     return Column(
       children: List.generate(
@@ -62,7 +61,9 @@ class ItemContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   child: CachedNetworkImage(
                     imageUrl:
-                        widget.books?[index].image ?? AppAssets.testImage,
+                        (widget.books?[index].images?.isNotEmpty ?? false)
+                            ? widget.books![index].images![0]
+                            : AppAssets.testImage,
                     fit: BoxFit.fill,
                   ),
                 ),

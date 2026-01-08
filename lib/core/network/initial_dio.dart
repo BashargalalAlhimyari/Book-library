@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/constants/app/app_constants.dart';
 import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/core/network/check_internet.dart';
 import 'package:clean_architecture/core/utils/token_storage.dart';
@@ -8,8 +9,8 @@ import 'package:dio/dio.dart';
 void initialiseDio(Dio _dio) {
   _dio.options
     ..baseUrl = _baseUrl
-    ..connectTimeout = const Duration(seconds: 10)
-    ..receiveTimeout = const Duration(seconds: 10)
+    ..connectTimeout = AppConstants.apiConnectTimeout
+    ..receiveTimeout = AppConstants.apiReceiveTimeout
     ..headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

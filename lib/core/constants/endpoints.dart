@@ -1,6 +1,6 @@
 
 final PORT = '3000';
-final IP = '10.36.84.22';
+final IP = '172.22.183.22';
 
 class EndPoint {
   static final String apiBaseUrl = 'http://$IP:$PORT';

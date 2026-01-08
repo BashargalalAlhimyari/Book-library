@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/constants/app/app_constants.dart';
 import 'package:clean_architecture/core/constants/constants.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:hive/hive.dart';
@@ -9,7 +10,7 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl extends HomeLocalDataSource {
   @override
-  List<BookEntity> fetchBooks({int pageNumber = 0}) {
+  List<BookEntity> fetchBooks({int pageNumber = AppConstants.defaultPageNumber}) {
     var box = Hive.box<BookEntity>(keyFeaturedBox);
 
     int startIndex = pageNumber * 10;
@@ -23,7 +24,7 @@ class HomeLocalDataSourceImpl extends HomeLocalDataSource {
   }
 
   @override
-  List<BookEntity> fetchNewsBooks({int pageNumber = 0}) {
+  List<BookEntity> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage}) {
    var box = Hive.box<BookEntity>(keyFeaturedNewsBox);
 
     int startIndex = pageNumber * 10;

@@ -6,8 +6,8 @@ class BookEntity {
   // الانتيتي تعبر عن البيانات التي تنعرض في الواجهة
   @HiveField(0)
   final String bookId;
-  @HiveField(1)
-  final String? image;
+  @HiveField(6)
+  final List<String>? images;
   @HiveField(2)
   final String title;
   @HiveField(3)
@@ -20,7 +20,7 @@ class BookEntity {
   BookEntity({
     required this.descrption,
     required this.bookId,
-    required this.image,
+    required this.images,
     required this.title,
     required this.authOrName,
     required this.categories,

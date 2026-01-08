@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/core/widgets/buttons/custom_button.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
@@ -24,14 +25,11 @@ class DetailsPageView extends StatelessWidget {
               child: Column(
                 children: [
                   AppBarBookDetails(),
-                  BookDetailsImage(imageUrl: books.image!),
+                  BookDetailsImage(images: books.images ?? []),
                   SizedBox(height: 20),
                   Text(books.title, style: Styles.textStyle30),
                   SizedBox(height: 5),
-                  Text(
-                    books.descrption ?? "",
-                    style: Styles.textStyle14,
-                  ),
+                  Text(books.descrption ?? "", style: Styles.textStyle14),
                   SizedBox(height: 5),
                   Text(
                     "${books.authOrName}",
@@ -44,9 +42,10 @@ class DetailsPageView extends StatelessWidget {
                   if (books.categories != null && books.categories!.isNotEmpty)
                     Wrap(
                       spacing: 8.0,
-                      children: books.categories!
-                          .map((category) => Chip(label: Text(category)))
-                          .toList(),
+                      children:
+                          books.categories!
+                              .map((category) => Chip(label: Text(category)))
+                              .toList(),
                     ),
                   SizedBox(height: 20),
 
@@ -101,7 +100,7 @@ class bookButton extends StatelessWidget {
             ),
           ),
           CustomButton(
-            color: const Color.fromARGB(255, 255, 117, 117),
+            color: AppColors.red,
             textColor: Colors.white,
             text: "Add to cart",
             onPressed: () {},
@@ -119,18 +118,23 @@ class bookButton extends StatelessWidget {
 }
 
 class BookDetailsImage extends StatelessWidget {
-  const BookDetailsImage({super.key, required this.imageUrl});
-  final String imageUrl;
+  const BookDetailsImage({super.key, required this.images});
+  final List<String> images;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.4,
-      child: AspectRatio(
-        aspectRatio: 3 / 4,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.fill),
-        ),
+      child: PageView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: images.length,
+        itemBuilder:
+            (context, index) => AspectRatio(
+              aspectRatio: 3 / 4,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: CachedNetworkImage(imageUrl: images[index], fit: BoxFit.fill),
+              ),
+            ),
       ),
     );
   }

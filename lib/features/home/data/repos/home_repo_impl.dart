@@ -21,40 +21,37 @@ class HomeRepoImpl extends HomeRepo {
   }) async {
     try {
       List<BookEntity> books;
-      books = homeLocalDataSource.fetchBooks(pageNumber: pageNumber);
-      if (books.isNotEmpty) {
-        return right(books);
-      }
+      // books = homeLocalDataSource.fetchBooks(pageNumber: pageNumber);
+      // if (books.isNotEmpty) {
+      //   return right(books);
+      // }
 
       books = await homeRemoteDataSource.fetchBooks(pageNumber: pageNumber);
-
       return right(books);
     } catch (e) {
       if (e is DioException) {
-        return left(
-          ServerFailure.fromDioError(e),
-        );
+        return left(ServerFailure.fromDioError(e));
       }
       return left(ServerFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<BookEntity>>> fetchNewsBooks({int pageNumber = 0}) async {
+  Future<Either<Failure, List<BookEntity>>> fetchNewsBooks({
+    int pageNumber = 0,
+  }) async {
     try {
       List<BookEntity> books;
-      books = homeLocalDataSource.fetchNewsBooks(pageNumber: pageNumber);
+      // books = homeLocalDataSource.fetchNewsBooks(pageNumber: pageNumber);
 
-      if (books.isNotEmpty) {
-        return right(books);
-      }
+      // if (books.isNotEmpty) {
+      //   return right(books);
+      // }
       books = await homeRemoteDataSource.fetchNewsBooks(pageNumber: pageNumber);
       return right(books);
     } catch (e) {
       if (e is DioException) {
-        return left(
-          ServerFailure.fromDioError(e),
-        );
+        return left(ServerFailure.fromDioError(e));
       }
       return left(ServerFailure(message: e.toString()));
     }

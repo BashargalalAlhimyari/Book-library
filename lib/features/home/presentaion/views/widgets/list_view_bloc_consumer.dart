@@ -21,10 +21,10 @@ class _listViewBlocBuilderState extends State<listViewBlocConsumer> {
     return BlocConsumer<BooksCubitDartCubit, BooksCubitDartState>(
       listener: (context, state) {
         if (state is BooksCubitDartSuccess) {
-          // استخدام Set لمنع تكرار العناصر بناءً على الهوية (ID) أو الكائن نفسه
-          // إذا كانت BookEntity تدعم المقارنة بشكل صحيح
           for (var book in state.books) {
-            if (!books.any((existingBook) => existingBook.bookId == book.bookId)) {
+            if (!books.any(
+              (existingBook) => existingBook.bookId == book.bookId,
+            )) {
               books.add(book);
             }
           }
@@ -41,7 +41,7 @@ class _listViewBlocBuilderState extends State<listViewBlocConsumer> {
             state is BooksCubitPaginationFailure) {
           return CostumListViewItems(books: books);
         } else if (state is BooksCubitDartFailure) {
-          return Text(state.errMessage);
+          return Center(child: Icon(Icons.error, size: 50, color: Colors.red));
         } else {
           return const Center(child: CircularProgressIndicator());
         }

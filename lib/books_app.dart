@@ -4,7 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/l10n/app_localizations.dart'; // تأكد من المسار
 import 'core/routes/appRouters.dart';
 import 'core/utils/manager/locale_cubit.dart';
-import 'core/functions/app_bloc_providers.dart'; // الملف الذي أنشأناه سابقاً
+import 'core/functions/app_bloc_providers.dart';
+import 'core/theme/theme.dart';
 
 class MainBooksApp extends StatelessWidget {
   const MainBooksApp({super.key});
@@ -13,7 +14,7 @@ class MainBooksApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       // هنا استدعينا الدالة الخارجية التي تحتوي على كل الـ Cubits
-      providers: getAppBlocProviders(), 
+      providers: getAppBlocProviders(),
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {
           return MaterialApp.router(
@@ -26,14 +27,11 @@ class MainBooksApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
-            ],
+            supportedLocales: const [Locale('en'), Locale('ar')],
             routerConfig: AppRouters.routers,
-            theme: ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: const Color(0xff100B20),
-            ),
+            theme: ThemeApp.lightTheme,
+            darkTheme: ThemeApp.darkTheme,
+            themeMode: ThemeMode.system,
           );
         },
       ),

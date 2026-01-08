@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clean_architecture/core/constants/assets.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
+import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/manager/featuredBooksCubit/books_cubit.dart';
 import 'package:flutter/material.dart';
@@ -59,29 +60,50 @@ class _CostumListViewItemsState extends State<CostumListViewItems> {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount: widget.books?.length,
-        itemBuilder:
-            (context, index) => AspectRatio(
-              aspectRatio: 2.9 / 4,
-              child: InkWell(
-                onTap: () {
-                  print(widget.books?[index].authOrName);
-                  GoRouter.of(
-                    context,
-                  ).push(Routes.detailsPage, extra: widget.books?[index]);
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          widget.books?[index].image ?? AppAssets.testImage,
-                      fit: BoxFit.fill,
-                    ),
+        itemBuilder: (context, index) => BookCard(widget: widget, index: index),
+      ),
+    );
+  }
+}
+
+class BookCard extends StatelessWidget {
+  const BookCard({super.key, required this.widget, required this.index});
+
+  final CostumListViewItems widget;
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 2.9 / 4,
+            child: InkWell(
+              onTap: () {
+                print(widget.books?[index].authOrName);
+                GoRouter.of(
+                  context,
+                ).push(Routes.detailsPage, extra: widget.books?[index]);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        (widget.books?[index].images?.isNotEmpty ?? false)
+                            ? widget.books![index].images![0]
+                            : AppAssets.testImage,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
             ),
+          ),
+          SizedBox(height: 7),
+          Text("Bashar Al-himyary", style: Styles.style14(context)),
+        ],
       ),
     );
   }

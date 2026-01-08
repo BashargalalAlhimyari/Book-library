@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:clean_architecture/core/constants/app/app_constants.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_books_use_case.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +15,7 @@ class BooksCubitDartCubit extends Cubit<BooksCubitDartState> {
   BooksCubitDartCubit(this.fetchBooksUseCase) : super(BooksCubitDartInitial());
   //في لغة Dart، عندما يرث كلاس من آخر، يجب على الابن أن ينادي مشيّد الأب باستخدام كلمة super.
 
-  Future<void> fetchFeatureBooks({int pageNumber = 0}) async {
+  Future<void> fetchFeatureBooks({int pageNumber = AppConstants.itemsPerPage}) async {
     if (pageNumber == 0) {
       emit(BooksCubitDartLoading());
       /*
@@ -25,7 +26,6 @@ class BooksCubitDartCubit extends Cubit<BooksCubitDartState> {
       emit(BooksCubitPaginationLoading());
     }
     var result = await fetchBooksUseCase.call(pageNumber);
-
     result.fold(
       (failure) {
         if (pageNumber == 0) {

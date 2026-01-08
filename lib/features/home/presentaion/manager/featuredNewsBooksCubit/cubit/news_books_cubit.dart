@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:clean_architecture/core/constants/app/app_constants.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_newest_use_case.dart';
 import 'package:meta/meta.dart';
@@ -10,7 +11,7 @@ class NewsBooksCubit extends Cubit<NewsBooksState> {
 
   final FetchNewestUseCase fetchNewestUseCase;
 
-  Future<void> fetchNewsBooks({int pageNumber = 0}) async {
+  Future<void> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage}) async {
     if (pageNumber == 0) {
       emit(NewsBooksLoading());
     } else {

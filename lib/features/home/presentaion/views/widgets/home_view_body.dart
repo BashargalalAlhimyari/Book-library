@@ -69,7 +69,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       SizedBox(height: 40),
                       Text(
                         AppLocalizations.of(context)!.bestSeller,
-                        style: Styles.textStyle18,
+                        style: Styles.style18(context),
                       ),
                       SizedBox(height: 20),
                     ],
