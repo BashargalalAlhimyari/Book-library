@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/network/dio_error_handler.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:clean_architecture/core/errors/failure.dart';
@@ -17,9 +18,9 @@ class AuthRepoImpl implements AuthRepo {
       return Right(result);
     } catch (e) {
       if (e is DioException) {
-        return Left(ServerFailure.fromDioError(e));
+        return left(DioErrorHandler.handle(e));
       }
-      return Left(ServerFailure(message: e.toString()));
+      return left(ServerFailure( e.toString()));
     }
   }
 
@@ -30,9 +31,9 @@ class AuthRepoImpl implements AuthRepo {
       return Right(result);
     } catch (e) {
       if (e is DioException) {
-        return Left(ServerFailure.fromDioError(e));
+        return left(DioErrorHandler.handle(e));
       }
-      return Left(ServerFailure(message: e.toString()));
+      return left(ServerFailure( e.toString()));
     }
   }
 }

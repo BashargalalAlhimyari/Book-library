@@ -2,6 +2,7 @@ import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/routes/appRouters.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
+import 'package:clean_architecture/core/utils/validations/app_validation.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,12 +114,7 @@ class _LoginViewState extends State<LoginView> {
                                 setState(() =>
                                     _isPasswordVisible = !_isPasswordVisible);
                               },
-                              validator: (value) {
-                                if (value == null || value.length < 4) {
-                                  return "كلمة المرور قصيرة جداً";
-                                }
-                                return null;
-                              },
+                              validator: (value) => Validator.password(value)
                             ),
                             const SizedBox(height: 40),
                             if (state is AuthLoading)

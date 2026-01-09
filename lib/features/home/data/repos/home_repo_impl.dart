@@ -1,4 +1,5 @@
 import 'package:clean_architecture/core/errors/failure.dart';
+import 'package:clean_architecture/core/network/dio_error_handler.dart';
 import 'package:clean_architecture/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:clean_architecture/features/home/data/data_sources/remote_data_source.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
@@ -28,11 +29,11 @@ class HomeRepoImpl extends HomeRepo {
 
       books = await homeRemoteDataSource.fetchBooks(pageNumber: pageNumber);
       return right(books);
-    } catch (e) {
+   } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioError(e));
+        return left(DioErrorHandler.handle(e));
       }
-      return left(ServerFailure(message: e.toString()));
+      return left(ServerFailure( e.toString()));
     }
   }
 
@@ -51,9 +52,9 @@ class HomeRepoImpl extends HomeRepo {
       return right(books);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioError(e));
+        return left(DioErrorHandler.handle(e));
       }
-      return left(ServerFailure(message: e.toString()));
+      return left(ServerFailure( e.toString()));
     }
   }
 }

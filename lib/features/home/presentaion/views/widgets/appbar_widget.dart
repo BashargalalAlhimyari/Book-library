@@ -1,5 +1,5 @@
 
-import 'package:clean_architecture/core/utils/manager/locale_cubit.dart';
+import 'package:clean_architecture/core/l10n/locale_cubit.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
