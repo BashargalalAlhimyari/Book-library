@@ -1,7 +1,12 @@
-import 'package:clean_architecture/core/theme/colors.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/routes/appRouters.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
-import 'package:clean_architecture/core/theme/styles.dart';
+import 'package:clean_architecture/core/theme/colors.dart';
+import 'package:clean_architecture/core/utils/validations/app_validation.dart';
+import 'package:clean_architecture/core/widgets/buttons/custom_button.dart';
+import 'package:clean_architecture/core/widgets/shared/auth_templete.dart';
+import 'package:clean_architecture/core/widgets/shared/custom_snack_bar.dart';
+import 'package:clean_architecture/core/widgets/shared/textFormField.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,205 +20,202 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  // 1️⃣ تعريف المفاتيح والكونترولرز
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+
+  // متغيرات لحالة إظهار كلمة المرور
   bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void _handleRegister() {
+  // 2️⃣ دالة التسجيل
+  void _handleSignUp() {
     if (_formKey.currentState!.validate()) {
+      // استدعاء الكيوبت (تأكد من وجود دالة signUp في الكيوبت لديك)
       context.read<AuthCubit>().register(
-            username: _usernameController.text,
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
+        username: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // محاكاة للنجاح مؤقتاً
+      CustomSnackBar.show(
+        context: context,
+        message: "Account Created Successfully",
+      );
+      GoRouter.of(context).go(Routes.homePage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Welcome ${state.user.username}')),
-            );
-            GoRouter.of(context).go(Routes.homePage);
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: AppColors.primaryGradient,
-            ),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthSuccess) {
+          CustomSnackBar.show(
+            context: context,
+            message: "Account created successfully!",
+          );
+          GoRouter.of(context).go(Routes.homePage);
+        } else if (state is AuthFailure) {
+          CustomSnackBar.show(
+            context: context,
+            message: state.message,
+            isError: true,
+          );
+        }
+      },
+      builder: (context, state) {
+        return AuthTemplate(
+          pageTitle: "Create Account",
+          pageSubtitle: "Join us and start your reading journey today",
+
+          body: Form(
+            key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("إنشاء حساب",
-                          style: Styles.textStyle40.copyWith(color: Colors.white)),
-                      const SizedBox(height: 10),
-                      Text("سجل حساب جديد للمتابعة",
-                          style: Styles.textStyle18.copyWith(color: Colors.white)),
-                    ],
-                  ),
+                // --- الاسم الكامل ---
+                CustomTextField(
+                  controller: _nameController,
+                  label: "الاسم الكامل",
+                  // hintText: "John Doe",
+                  prefixIcon: Icons.person_outline_rounded,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value == null || value.length < 3) {
+                      return "Name must be at least 3 characters";
+                    }
+                    return null;
+                  },
+                 
                 ),
+
                 const SizedBox(height: 20),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(60),
-                          topRight: Radius.circular(60)),
+
+                // --- البريد الإلكتروني ---
+                CustomTextField(
+                  controller: _emailController,
+                  label: "البريد الإلكتروني",
+                  hintText: "example@gmail.com",
+                  prefixIcon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => Validator.email(value),
+                ),
+
+                const SizedBox(height: 20),
+
+                // --- كلمة المرور ---
+                CustomTextField(
+                  controller: _passwordController,
+                  label: "كلمة المرور",
+                  hintText: "********",
+                  isPassword: true,
+                  isPasswordVisible: _isPasswordVisible,
+                  obscureText: !_isPasswordVisible, // استخدام المتغير الصحيح
+                  prefixIcon: Icons.lock_outline,
+                 onTap: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => Validator.password(value),
+                ),
+
+                const SizedBox(height: 20),
+
+                // --- تأكيد كلمة المرور ---
+                CustomTextField(
+                  controller: _confirmPasswordController,
+                  label: "تأكيد كلمة المرور",
+                  hintText: "********",
+                  isPassword: true,
+                  isPasswordVisible: _isConfirmPasswordVisible,
+                  obscureText: !_isConfirmPasswordVisible,
+                   prefixIcon: Icons.check_circle_outline_outlined, // أيقونة مختلفة
+                  onTap: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _handleSignUp(),
+                  // ⚠️ تحقق خاص لتطابق الكلمتين
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return "Please confirm password";
+                    if (value != _passwordController.text)
+                      return "Passwords do not match";
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 40),
+
+                // --- زر التسجيل ---
+                if (state is AuthLoading)
+                  const Center(child: CircularProgressIndicator())
+                else
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      color: AppColors.indigo,
+                      text: "إنشاء حساب",
+                      onPressed: _handleSignUp,
+                      textColor: Colors.white,
                     ),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(30),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            _buildTextField(
-                              controller: _usernameController,
-                              label: "اسم المستخدم",
-                              icon: Icons.person_outline,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "أدخل اسم المستخدم";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            _buildTextField(
-                              controller: _emailController,
-                              label: "البريد الإلكتروني",
-                              icon: Icons.email_outlined,
-                              validator: (value) {
-                                if (value == null || !value.contains('@')) {
-                                  return "أدخل بريداً صالحاً";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            _buildTextField(
-                              controller: _passwordController,
-                              label: "كلمة المرور",
-                              icon: Icons.lock_outline,
-                              isPassword: true,
-                              isPasswordVisible: _isPasswordVisible,
-                              onToggleVisibility: () {
-                                setState(() =>
-                                    _isPasswordVisible = !_isPasswordVisible);
-                              },
-                              validator: (value) {
-                                if (value == null || value.length < 4) {
-                                  return "كلمة المرور قصيرة جداً";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 40),
-                            if (state is AuthLoading)
-                              const CircularProgressIndicator()
-                            else
-                              MaterialButton(
-                                onPressed: _handleRegister,
-                                height: 50,
-                                minWidth: double.infinity,
-                                color: AppColors.primary,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Text("إنشاء حساب",
-                                    style: Styles.textStyle16.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("لديك حساب بالفعل؟",
-                                    style: TextStyle(color: Colors.grey)),
-                                TextButton(
-                                  onPressed: () {
-                                    GoRouter.of(context).pop();
-                                  },
-                                  child: Text("سجل الدخول",
-                                      style: Styles.textStyle14.copyWith(
-                                          color: AppColors.primary,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            ),
-                          ],
+                  ),
+
+                const SizedBox(height: 20),
+
+                // --- رابط العودة لتسجيل الدخول ---
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "لديك حساب بالفعل؟",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        GoRouter.of(context).pop(); // العودة للخلف (Login)
+                      },
+                      child: const Text(
+                        "سجل دخول",
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                )
+                  ],
+                ),
               ],
             ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    bool isPassword = false,
-    bool isPasswordVisible = false,
-    VoidCallback? onToggleVisibility,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: isPassword && !isPasswordVisible,
-      validator: validator,
-      style: Styles.textStyle14.copyWith(color: Colors.black),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: Styles.textStyle14.copyWith(color: Colors.grey),
-        prefixIcon: Icon(icon, color: AppColors.primary),
-        suffixIcon: isPassword
-            ? IconButton(
-                icon: Icon(
-                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.grey),
-                onPressed: onToggleVisibility,
-              )
-            : null,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

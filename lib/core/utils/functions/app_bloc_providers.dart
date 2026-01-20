@@ -5,13 +5,17 @@ import 'package:clean_architecture/features/home/domain/user_cases/fetch_books_u
     show FetchBooksUseCase;
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_newest_use_case.dart'
     show FetchNewestUseCase;
-import 'package:clean_architecture/features/home/presentaion/manager/CardDotedCubit/cubit/card_doted_cubit.dart';
-import 'package:clean_architecture/features/home/presentaion/manager/featuredBooksCubit/books_cubit.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
-import 'package:clean_architecture/features/home/presentaion/manager/navigationCubit/cubit/navigate_cubit.dart';
+import 'package:clean_architecture/features/home/domain/user_cases/fetch_top_rated_books_use_case.dart';
+import 'package:clean_architecture/features/home/domain/user_cases/fetch_trending_books_use_case.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/CardDotedCubit/card_doted_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../features/home/presentaion/manager/featuredNewsBooksCubit/cubit/news_books_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart';
 
 List<BlocProvider> getAppBlocProviders() {
   return [
@@ -19,17 +23,20 @@ List<BlocProvider> getAppBlocProviders() {
     BlocProvider<NavigateCubit>(create: (context) => NavigateCubit()),
     BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
     BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
-    BlocProvider<BooksCubitDartCubit>(
+
+    BlocProvider<TopRatedBooksCubit>(
       create:
-          (context) => BooksCubitDartCubit(
-             FetchBooksUseCase(getIt.get<HomeRepoImpl>()),
-          )..fetchFeatureBooks(),
+          (context) => getIt.get<TopRatedBooksCubit>()..fetchTopRatedBooks(),
     ),
     BlocProvider<NewsBooksCubit>(
+      create: (context) => getIt.get<NewsBooksCubit>()..fetchNewsBooks(),
+    ),
+    BlocProvider<TrendingBooksCubit>(
       create:
-          (context) => NewsBooksCubit(
-            FetchNewestUseCase(homeRepo: getIt.get<HomeRepoImpl>()),
-          )..fetchNewsBooks(),
+          (context) => getIt.get<TrendingBooksCubit>()..fetchTrendingBooks(),
+    ),
+    BlocProvider<QuickReadBooksCubit>(
+      create: (context) => getIt.get<QuickReadBooksCubit>()..fetchQuickBooks(),
     ),
   ];
 }

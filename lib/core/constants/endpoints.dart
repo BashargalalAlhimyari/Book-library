@@ -1,14 +1,20 @@
 
-final PORT = '3000';
-final IP = '172.22.183.22';
+const PORT = '3000';
+const IP = '127.0.0.1';
 
 class EndPoint {
-  static final String apiBaseUrl = 'http://$IP:$PORT';
-  static final String baseUrl = '$apiBaseUrl/api';
-  static final String loginEndpoint = '/auth/login';
-  static final String registerEndpoint = '/auth/register';
-  static final String booksEndpoint = '/books';
-  static final String bookDetailsEndpoint = '/books/{id}';
+  static const String apiBaseUrl = 'http://$IP:3000';
+  static const String baseUrl = '$apiBaseUrl/api/v1';
+  static const String loginEndpoint = '/auth/login';
+  static const String registerEndpoint = '/auth/register';
+  static const String booksEndpoint = '/books';
+  static const String trendingBooksEndpoint = '/books/trendingBooks';
+  static const String newsBooksEndpoint = '/books/newsBooks';
+  static const String quickReadEndpoint = '/books/quickRead';
+  static const String topRatedBooksEndpoint = '/books/topRatedBooks';
+  static const String bookDetailsEndpoint = '/books/{id}';
+  static const String uploadsBaseUrl = '$apiBaseUrl/';
 
-  static final String uploadsBaseUrl = '$apiBaseUrl/uploads/';
+  // للدوال التي تحتاج باراميترات، نستخدم دالة ثابتة
+  static String bookDetails(int id) => '/books/$id';
 }

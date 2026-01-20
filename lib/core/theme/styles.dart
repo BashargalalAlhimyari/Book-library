@@ -2,7 +2,7 @@ import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class Styles {
-  // Headlines
+  // ================= Constants (الثوابت) =================
   static const textStyle40 = TextStyle(
     fontSize: 40,
     fontWeight: FontWeight.bold,
@@ -23,7 +23,6 @@ abstract class Styles {
     fontWeight: FontWeight.bold,
   );
 
-  // Titles & Body
   static const textStyle18 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -39,7 +38,6 @@ abstract class Styles {
     fontWeight: FontWeight.normal,
   );
 
-  // Captions & Small Text
   static const textStyle13 = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.w500,
@@ -50,12 +48,17 @@ abstract class Styles {
     fontWeight: FontWeight.normal,
   );
 
-  static const textStyle11 = TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.normal,
-  );
+  // ================= Helper Methods (الدوال الناقصة) =================
+  
+  // ✅ تم إضافة style24
+  static TextStyle style24(BuildContext context) {
+    return textStyle24.copyWith(
+      color: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.textPrimaryDark
+          : AppColors.textPrimaryLight,
+    );
+  }
 
-  // Helper methods for dynamic coloring
   static TextStyle style30(BuildContext context) {
     return textStyle30.copyWith(
       color: Theme.of(context).brightness == Brightness.dark
@@ -72,6 +75,15 @@ abstract class Styles {
     );
   }
 
+  // ✅ تم إضافة style16
+  static TextStyle style16(BuildContext context) {
+    return textStyle16.copyWith(
+      color: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.textPrimaryDark
+          : AppColors.textPrimaryLight,
+    );
+  }
+
   static TextStyle style14(BuildContext context) {
     return textStyle14.copyWith(
       color: Theme.of(context).brightness == Brightness.dark
@@ -79,7 +91,7 @@ abstract class Styles {
           : AppColors.textPrimaryLight,
     );
   }
-  
+
   static TextStyle style12(BuildContext context) {
     return textStyle12.copyWith(
       color: Theme.of(context).brightness == Brightness.dark

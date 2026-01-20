@@ -1,8 +1,8 @@
 import 'dart:core';
 
 import 'package:clean_architecture/core/common/enums/password_strength.dart';
-import 'package:clean_architecture/core/constants/app/app_constants.dart';
-import 'package:clean_architecture/core/constants/app/app_strings.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
+import 'package:clean_architecture/core/constants/app_strings.dart';
 import 'package:clean_architecture/core/utils/validations/validation_pattern.dart';
 
 class Validator {

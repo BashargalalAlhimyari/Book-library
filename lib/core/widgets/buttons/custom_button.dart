@@ -12,24 +12,26 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.color,
     required this.textColor,
-     this.shape,
+    this.shape,
     required this.onPressed,
     required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: MaterialButton(
-        minWidth: 150,
-        elevation: 0,
-        padding: const EdgeInsets.all(10),
-        color: color,
-        textColor: textColor,
-        shape: shape??RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        onPressed: onPressed,
-        child: Text(text , style: Styles.textStyle16,),
-      ),
+    return MaterialButton(
+      height: 50,
+      minWidth: 300,
+
+      elevation: 0,
+      padding: const EdgeInsets.all(10),
+      color: color,
+      textColor: textColor,
+      shape:
+          shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      onPressed: onPressed,
+      child: Text(text, style: Styles.textStyle16),
     );
   }
 }

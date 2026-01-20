@@ -1,0 +1,11 @@
+import 'package:clean_architecture/core/constants/app_constants.dart';
+import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
+import 'package:hive/hive.dart';
+
+Future<void> initHive() async {
+  await Hive.openBox<BookEntity>(AppConstants.boxFeaturedBooks);
+  await Hive.openBox<BookEntity>(AppConstants.boxFeaturedNewsBox);
+  await Hive.openBox<BookEntity>(AppConstants.boxFeaturedTrendinBooks);
+  await Hive.openBox<BookEntity>(AppConstants.boxFeaturedTopRatedBooks);
+  await Hive.openBox<BookEntity>(AppConstants.boxFeaturedQuickReadBooks);
+}

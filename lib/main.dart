@@ -1,10 +1,28 @@
+import 'package:bloc/bloc.dart';
 import 'package:clean_architecture/books_app.dart';
-import 'package:clean_architecture/core/utils/functions/init_app_configs.dart';
+import 'package:clean_architecture/core/di/service_locator.dart';
+import 'package:clean_architecture/core/utils/bloc_observer.dart';
+import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
+import 'package:clean_architecture/core/utils/hive/hive_setup.dart';
+import 'package:clean_architecture/core/utils/hive/init_hive.dart';
+import 'package:clean_architecture/core/utils/hive/token_storage.dart';
+import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initAppConfigs();
+  Bloc.observer = MyBlocObserver();
+  await Hive.initFlutter();
+  Hive.registerAdapter<BookEntity>(BookEntityAdapter());
+  await initHive();
+  await TokenStorage.init();
+  await CacheHelper.init();
+  setupServiceLocator();
+
+
+  //  await CacheHelper.init();
+  //  HiveService.init();
   runApp(const BooksApp());
 }
 

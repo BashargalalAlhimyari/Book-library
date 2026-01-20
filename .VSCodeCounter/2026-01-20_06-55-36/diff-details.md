@@ -1,0 +1,117 @@
+# Diff Details
+
+Date : 2026-01-20 06:55:36
+
+Directory c:\\Users\\Bashar Al-himyary\\Desktop\\All Project\\flutter\\clean_architecture\\lib
+
+Total : 102 files,  4296 codes, 359 comments, 678 blanks, all 5333 lines
+
+[Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [lib/books\_app.dart](/lib/books_app.dart) | Dart | 51 | 1 | 6 | 58 |
+| [lib/core/constants/app/app\_constants.dart](/lib/core/constants/app/app_constants.dart) | Dart | -22 | -5 | -6 | -33 |
+| [lib/core/constants/app/app\_strings.dart](/lib/core/constants/app/app_strings.dart) | Dart | -18 | -2 | -2 | -22 |
+| [lib/core/constants/app\_constants.dart](/lib/core/constants/app_constants.dart) | Dart | 47 | 8 | 14 | 69 |
+| [lib/core/constants/app\_strings.dart](/lib/core/constants/app_strings.dart) | Dart | 18 | 2 | 2 | 22 |
+| [lib/core/constants/endpoints.dart](/lib/core/constants/endpoints.dart) | Dart | 4 | 0 | 0 | 4 |
+| [lib/core/di/service\_locator.dart](/lib/core/di/service_locator.dart) | Dart | 32 | 2 | 12 | 46 |
+| [lib/core/errors/exception.dart](/lib/core/errors/exception.dart) | Dart | 8 | 3 | 3 | 14 |
+| [lib/core/l10n/app\_localizations\_ar.dart](/lib/core/l10n/app_localizations_ar.dart) | Dart | -1 | 0 | 0 | -1 |
+| [lib/core/l10n/app\_localizations\_en.dart](/lib/core/l10n/app_localizations_en.dart) | Dart | -1 | 0 | 0 | -1 |
+| [lib/core/network/api\_service.dart](/lib/core/network/api_service.dart) | Dart | 0 | 0 | 1 | 1 |
+| [lib/core/network/execute\_request.dart](/lib/core/network/execute_request.dart) | Dart | 5 | -6 | 7 | 6 |
+| [lib/core/network/initial\_dio.dart](/lib/core/network/initial_dio.dart) | Dart | -1 | -4 | -2 | -7 |
+| [lib/core/routes/appRouters.dart](/lib/core/routes/appRouters.dart) | Dart | 5 | 0 | 0 | 5 |
+| [lib/core/routes/navigatorKey.dart](/lib/core/routes/navigatorKey.dart) | Dart | 0 | 5 | 0 | 5 |
+| [lib/core/routes/paths\_routes.dart](/lib/core/routes/paths_routes.dart) | Dart | 1 | 0 | 0 | 1 |
+| [lib/core/theme/app\_shadows.dart](/lib/core/theme/app_shadows.dart) | Dart | 34 | 5 | 5 | 44 |
+| [lib/core/theme/colors.dart](/lib/core/theme/colors.dart) | Dart | 13 | 9 | 7 | 29 |
+| [lib/core/theme/styles.dart](/lib/core/theme/styles.dart) | Dart | 10 | 0 | 1 | 11 |
+| [lib/core/theme/theme.dart](/lib/core/theme/theme.dart) | Dart | 76 | 16 | 9 | 101 |
+| [lib/core/utils/cache/shared\_pref.dart](/lib/core/utils/cache/shared_pref.dart) | Dart | 39 | 21 | 15 | 75 |
+| [lib/core/utils/functions/app\_bloc\_providers.dart](/lib/core/utils/functions/app_bloc_providers.dart) | Dart | 6 | 0 | 1 | 7 |
+| [lib/core/utils/functions/getDomainColor.dart](/lib/core/utils/functions/getDomainColor.dart) | Dart | 8 | 1 | 2 | 11 |
+| [lib/core/utils/functions/init\_app\_configs.dart](/lib/core/utils/functions/init_app_configs.dart) | Dart | -15 | 0 | -1 | -16 |
+| [lib/core/utils/functions/share\_product.dart](/lib/core/utils/functions/share_product.dart) | Dart | 0 | 23 | 3 | 26 |
+| [lib/core/utils/hive/hive\_setup.dart](/lib/core/utils/hive/hive_setup.dart) | Dart | 10 | 0 | 3 | 13 |
+| [lib/core/utils/hive/init\_hive.dart](/lib/core/utils/hive/init_hive.dart) | Dart | 3 | 0 | 1 | 4 |
+| [lib/core/utils/hive/save\_books.dart](/lib/core/utils/hive/save_books.dart) | Dart | 1 | 3 | 1 | 5 |
+| [lib/core/widgets/buttons/custom\_button.dart](/lib/core/widgets/buttons/custom_button.dart) | Dart | 1 | 0 | 2 | 3 |
+| [lib/core/widgets/shared/auth\_templete.dart](/lib/core/widgets/shared/auth_templete.dart) | Dart | 172 | 2 | 14 | 188 |
+| [lib/core/widgets/shared/custom\_snack\_bar.dart](/lib/core/widgets/shared/custom_snack_bar.dart) | Dart | 77 | 5 | 4 | 86 |
+| [lib/core/widgets/shared/placeholderForNotSelectedItem.dart](/lib/core/widgets/shared/placeholderForNotSelectedItem.dart) | Dart | 48 | 3 | 7 | 58 |
+| [lib/core/widgets/shared/resizable\_layout.dart.dart](/lib/core/widgets/shared/resizable_layout.dart.dart) | Dart | 72 | 8 | 10 | 90 |
+| [lib/core/widgets/shared/responsive\_layout.dart](/lib/core/widgets/shared/responsive_layout.dart) | Dart | 27 | 0 | 3 | 30 |
+| [lib/core/widgets/shared/textFormField.dart](/lib/core/widgets/shared/textFormField.dart) | Dart | 127 | 14 | 17 | 158 |
+| [lib/features/auth/data/data\_sourse/auth\_remote\_data\_source.dart](/lib/features/auth/data/data_sourse/auth_remote_data_source.dart) | Dart | 51 | 2 | 12 | 65 |
+| [lib/features/auth/data/models/auth\_model.dart](/lib/features/auth/data/models/auth_model.dart) | Dart | 25 | 0 | 4 | 29 |
+| [lib/features/auth/data/repo/auth\_repo\_impl.dart](/lib/features/auth/data/repo/auth_repo_impl.dart) | Dart | 36 | 0 | 5 | 41 |
+| [lib/features/auth/domain/entity/auth\_entity.dart](/lib/features/auth/domain/entity/auth_entity.dart) | Dart | 12 | 0 | 2 | 14 |
+| [lib/features/auth/domain/entity/login\_entity.dart](/lib/features/auth/domain/entity/login_entity.dart) | Dart | 5 | 0 | 1 | 6 |
+| [lib/features/auth/domain/entity/signup\_entity.dart](/lib/features/auth/domain/entity/signup_entity.dart) | Dart | 10 | 0 | 1 | 11 |
+| [lib/features/auth/domain/repo/auth\_repo.dart](/lib/features/auth/domain/repo/auth_repo.dart) | Dart | 6 | 0 | 1 | 7 |
+| [lib/features/auth/domain/user\_cases/login\_usecase.dart](/lib/features/auth/domain/user_cases/login_usecase.dart) | Dart | 17 | 0 | 6 | 23 |
+| [lib/features/auth/domain/user\_cases/register\_usecase.dart](/lib/features/auth/domain/user_cases/register_usecase.dart) | Dart | 27 | 0 | 6 | 33 |
+| [lib/features/auth/presentaion/manger/auth\_cubit.dart](/lib/features/auth/presentaion/manger/auth_cubit.dart) | Dart | 59 | 0 | 10 | 69 |
+| [lib/features/auth/presentaion/manger/auth\_state.dart](/lib/features/auth/presentaion/manger/auth_state.dart) | Dart | 13 | 0 | 6 | 19 |
+| [lib/features/auth/presentaion/views/forget\_password.dart](/lib/features/auth/presentaion/views/forget_password.dart) | Dart | 108 | 11 | 15 | 134 |
+| [lib/features/auth/presentaion/views/login.dart](/lib/features/auth/presentaion/views/login.dart) | Dart | 160 | 6 | 19 | 185 |
+| [lib/features/auth/presentaion/views/sign\_up.dart](/lib/features/auth/presentaion/views/sign_up.dart) | Dart | 188 | 13 | 21 | 222 |
+| [lib/features/home/data/data\_sources/home\_local\_data\_source.dart](/lib/features/home/data/data_sources/home_local_data_source.dart) | Dart | 75 | 6 | 17 | 98 |
+| [lib/features/home/data/data\_sources/remote\_data\_source.dart](/lib/features/home/data/data_sources/remote_data_source.dart) | Dart | 70 | 4 | 15 | 89 |
+| [lib/features/home/data/models/books\_model/books\_model.dart](/lib/features/home/data/models/books_model/books_model.dart) | Dart | 101 | 9 | 12 | 122 |
+| [lib/features/home/data/repos/home\_repo\_impl.dart](/lib/features/home/data/repos/home_repo_impl.dart) | Dart | 92 | 6 | 19 | 117 |
+| [lib/features/home/domain/entity/book\_entity.dart](/lib/features/home/domain/entity/book_entity.dart) | Dart | 43 | 1 | 15 | 59 |
+| [lib/features/home/domain/entity/book\_entity.g.dart](/lib/features/home/domain/entity/book_entity.g.dart) | Dart | 63 | 4 | 8 | 75 |
+| [lib/features/home/domain/repos/home\_repo.dart](/lib/features/home/domain/repos/home_repo.dart) | Dart | 9 | 0 | 2 | 11 |
+| [lib/features/home/domain/user\_cases/fetch\_books\_use\_case.dart](/lib/features/home/domain/user_cases/fetch_books_use_case.dart) | Dart | 14 | 0 | 5 | 19 |
+| [lib/features/home/domain/user\_cases/fetch\_newest\_use\_case.dart](/lib/features/home/domain/user_cases/fetch_newest_use_case.dart) | Dart | 14 | 1 | 5 | 20 |
+| [lib/features/home/domain/user\_cases/fetch\_quick\_read\_books\_use\_case.dart](/lib/features/home/domain/user_cases/fetch_quick_read_books_use_case.dart) | Dart | 14 | 0 | 5 | 19 |
+| [lib/features/home/domain/user\_cases/fetch\_top\_rated\_books\_use\_case.dart](/lib/features/home/domain/user_cases/fetch_top_rated_books_use_case.dart) | Dart | 14 | 0 | 5 | 19 |
+| [lib/features/home/domain/user\_cases/fetch\_trending\_books\_use\_case.dart](/lib/features/home/domain/user_cases/fetch_trending_books_use_case.dart) | Dart | 14 | 1 | 5 | 20 |
+| [lib/features/home/presentaion/presentaion/manager/CardDotedCubit/card\_doted\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/CardDotedCubit/card_doted_cubit.dart) | Dart | 9 | 0 | 4 | 13 |
+| [lib/features/home/presentaion/presentaion/manager/CardDotedCubit/card\_doted\_state.dart](/lib/features/home/presentaion/presentaion/manager/CardDotedCubit/card_doted_state.dart) | Dart | 8 | 0 | 5 | 13 |
+| [lib/features/home/presentaion/presentaion/manager/featuredNewsBooksCubit/news\_books\_state.dart](/lib/features/home/presentaion/presentaion/manager/featuredNewsBooksCubit/news_books_state.dart) | Dart | 0 | 17 | 10 | 27 |
+| [lib/features/home/presentaion/presentaion/manager/navigationCubit/navigate\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart) | Dart | 9 | 0 | 5 | 14 |
+| [lib/features/home/presentaion/presentaion/manager/navigationCubit/navigate\_state.dart](/lib/features/home/presentaion/presentaion/manager/navigationCubit/navigate_state.dart) | Dart | 8 | 0 | 4 | 12 |
+| [lib/features/home/presentaion/presentaion/manager/newsBooksCubit/news\_books\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart) | Dart | 45 | 8 | 13 | 66 |
+| [lib/features/home/presentaion/presentaion/manager/newsBooksCubit/news\_books\_state.dart](/lib/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_state.dart) | Dart | 22 | 0 | 9 | 31 |
+| [lib/features/home/presentaion/presentaion/manager/quick\_read\_books\_cubit/quick\_read\_books\_cubit\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_cubit.dart) | Dart | 41 | 3 | 15 | 59 |
+| [lib/features/home/presentaion/presentaion/manager/quick\_read\_books\_cubit/quick\_read\_books\_cubit\_state.dart](/lib/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_state.dart) | Dart | 21 | 2 | 11 | 34 |
+| [lib/features/home/presentaion/presentaion/manager/selected\_book\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/selected_book_cubit.dart) | Dart | 8 | 1 | 2 | 11 |
+| [lib/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top\_rated\_books\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart) | Dart | 40 | 3 | 13 | 56 |
+| [lib/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top\_rated\_books\_state.dart](/lib/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_state.dart) | Dart | 21 | 4 | 9 | 34 |
+| [lib/features/home/presentaion/presentaion/manager/trendingBooks/trendin\_books\_cubit.dart](/lib/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart) | Dart | 41 | 8 | 13 | 62 |
+| [lib/features/home/presentaion/presentaion/manager/trendingBooks/trendin\_books\_state.dart](/lib/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_state.dart) | Dart | 22 | 0 | 11 | 33 |
+| [lib/features/home/presentaion/presentaion/screens/details\_page.dart](/lib/features/home/presentaion/presentaion/screens/details_page.dart) | Dart | 92 | 10 | 11 | 113 |
+| [lib/features/home/presentaion/presentaion/screens/home\_page.dart](/lib/features/home/presentaion/presentaion/screens/home_page.dart) | Dart | 15 | 0 | 2 | 17 |
+| [lib/features/home/presentaion/presentaion/screens/layouts/desktop\_layout.dart](/lib/features/home/presentaion/presentaion/screens/layouts/desktop_layout.dart) | Dart | 97 | 14 | 9 | 120 |
+| [lib/features/home/presentaion/presentaion/screens/layouts/mobile\_layout.dart](/lib/features/home/presentaion/presentaion/screens/layouts/mobile_layout.dart) | Dart | 81 | 6 | 13 | 100 |
+| [lib/features/home/presentaion/presentaion/screens/layouts/tablet\_layout.dart](/lib/features/home/presentaion/presentaion/screens/layouts/tablet_layout.dart) | Dart | 63 | 4 | 7 | 74 |
+| [lib/features/home/presentaion/presentaion/screens/sideBar.dart](/lib/features/home/presentaion/presentaion/screens/sideBar.dart) | Dart | 208 | 6 | 14 | 228 |
+| [lib/features/home/presentaion/presentaion/widgets/appbar\_widget.dart](/lib/features/home/presentaion/presentaion/widgets/appbar_widget.dart) | Dart | 46 | 35 | 12 | 93 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/book\_rating.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/book_rating.dart) | Dart | 17 | 0 | 2 | 19 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/buildBottomAction.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/buildBottomAction.dart) | Dart | 55 | 3 | 5 | 63 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/buildCategories.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/buildCategories.dart) | Dart | 43 | 0 | 5 | 48 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/buildSliverAppBar.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/buildSliverAppBar.dart) | Dart | 98 | 3 | 6 | 107 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/buildStatItem.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/buildStatItem.dart) | Dart | 42 | 0 | 4 | 46 |
+| [lib/features/home/presentaion/presentaion/widgets/details\_page\_widgets/buildTitleSection.dart](/lib/features/home/presentaion/presentaion/widgets/details_page_widgets/buildTitleSection.dart) | Dart | 55 | 0 | 5 | 60 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/BannerCard.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/BannerCard.dart) | Dart | 156 | 14 | 9 | 179 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/NewBookCard.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/NewBookCard.dart) | Dart | 126 | 15 | 12 | 153 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/NewBooksConsumer.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/NewBooksConsumer.dart) | Dart | 40 | 1 | 3 | 44 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/QuickReadBooksConsumer.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/QuickReadBooksConsumer.dart) | Dart | 43 | 1 | 3 | 47 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/QuickReadCard.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/QuickReadCard.dart) | Dart | 110 | 9 | 12 | 131 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/TopRatedBookCard.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/TopRatedBookCard.dart) | Dart | 110 | 9 | 12 | 131 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/TopRatedConsumer.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/TopRatedConsumer.dart) | Dart | 41 | 1 | 3 | 45 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/TrendingBookCard.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/TrendingBookCard.dart) | Dart | 120 | 1 | 11 | 132 |
+| [lib/features/home/presentaion/presentaion/widgets/home\_page\_widgets/TrendingBooksConsumer.dart](/lib/features/home/presentaion/presentaion/widgets/home_page_widgets/TrendingBooksConsumer.dart) | Dart | 60 | 1 | 6 | 67 |
+| [lib/features/home/presentaion/presentaion/widgets/navigationBar.dart](/lib/features/home/presentaion/presentaion/widgets/navigationBar.dart) | Dart | 91 | 0 | 4 | 95 |
+| [lib/features/splash/presentaion/views/spalsh\_view.dart](/lib/features/splash/presentaion/views/spalsh_view.dart) | Dart | 12 | 0 | 3 | 15 |
+| [lib/features/splash/presentaion/views/widgets/sliding\_text.dart](/lib/features/splash/presentaion/views/widgets/sliding_text.dart) | Dart | 17 | 0 | 5 | 22 |
+| [lib/features/splash/presentaion/views/widgets/splash\_view\_body.dart](/lib/features/splash/presentaion/views/widgets/splash_view_body.dart) | Dart | 57 | 0 | 9 | 66 |
+| [lib/main.dart](/lib/main.dart) | Dart | 29 | 2 | 6 | 37 |
+
+[Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details

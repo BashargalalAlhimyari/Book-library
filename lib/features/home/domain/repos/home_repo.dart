@@ -1,9 +1,10 @@
-import 'package:clean_architecture/core/constants/app/app_constants.dart';
-import 'package:clean_architecture/core/errors/failure.dart';
-import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
-import 'package:dartz/dartz.dart';
+import 'package:clean_architecture/core/common/type_def/typesdef.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 
 abstract class HomeRepo {
-  Future<Either<Failure, List<BookEntity>>> fetchBooks({int pageNumber=AppConstants.itemsPerPage});
-  Future<Either<Failure, List<BookEntity>>> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage});
+  ResultFuture<BooksList> fetchBooks({int pageNumber=AppConstants.itemsPerPage});
+  ResultFuture<BooksList> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage});
+  ResultFuture<BooksList> fetchTrendingBooks({int pageNumber = AppConstants.itemsPerPage});
+  ResultFuture<BooksList> fetchTopRatedBooks({int pageNumber = AppConstants.itemsPerPage});
+  ResultFuture<BooksList> fetchQuickReadBooks({int pageNumber = AppConstants.itemsPerPage});
 }

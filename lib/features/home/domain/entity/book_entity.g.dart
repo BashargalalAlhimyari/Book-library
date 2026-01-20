@@ -17,31 +17,49 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BookEntity(
-      descrption: fields[4] as String?,
       bookId: fields[0] as String,
-      images: (fields[6] as List?)?.cast<String>(),
-      title: fields[2] as String,
-      authOrName: fields[3] as String?,
-      categories: (fields[5] as List?)?.cast<String>(),
+      title: fields[1] as String,
+      authors: (fields[2] as List?)?.cast<String>(),
+      description: fields[3] as String?,
+      categories: (fields[4] as List?)?.cast<String>(),
+      images: (fields[5] as List?)?.cast<String>(),
+      subtitle: fields[6] as String?,
+      coverUrl: fields[7] as String?,
+      price: fields[8] as num?,
+      averageRating: fields[9] as num?,
+      ratingCount: fields[10] as int?,
+      fileUrl: fields[11] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, BookEntity obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.bookId)
-      ..writeByte(6)
-      ..write(obj.images)
-      ..writeByte(2)
+      ..writeByte(1)
       ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.authors)
       ..writeByte(3)
-      ..write(obj.authOrName)
+      ..write(obj.description)
       ..writeByte(4)
-      ..write(obj.descrption)
+      ..write(obj.categories)
       ..writeByte(5)
-      ..write(obj.categories);
+      ..write(obj.images)
+      ..writeByte(6)
+      ..write(obj.subtitle)
+      ..writeByte(7)
+      ..write(obj.coverUrl)
+      ..writeByte(8)
+      ..write(obj.price)
+      ..writeByte(9)
+      ..write(obj.averageRating)
+      ..writeByte(10)
+      ..write(obj.ratingCount)
+      ..writeByte(11)
+      ..write(obj.fileUrl);
   }
 
   @override

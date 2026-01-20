@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+
+abstract class AppConstants {
+  static const String appName = 'Bookly';
+  static const String appVersion = '1.0.0';
+  static const String appDescription = 'A book reading application';
+
+  //localization
+  static const String arabicLang = 'ar';
+  static const String englishLang = 'en';
+  static const String defaultLang = 'en';
+  static const List<String> supportedLocales = ['en', 'ar'];
+
+  //Hive box names
+  static const String boxAuthTokenName = 'auth_token_box';
+  static const String tokenKey = 'auth_token';
+  static const String boxFeaturedBooks = "featured_box";
+  static const String boxFeaturedNewsBox = "featured_news_box";
+  static const String boxFeaturedTrendinBooks = "featured_trending_books";
+  static const String boxFeaturedTopRatedBooks = "featured_top_rated_books";
+  static const String boxFeaturedQuickReadBooks = "featured_quick_read_books";
+
+  // shared preferences keys
+  static const String token = 'TOKEN';
+  static const String language = 'LANGUAGE';
+  static const String theme = 'THEME';
+  static const String onBoarding = 'ON_BOARDING';
+   static const String userId = 'k_user_id';
+  static const String userName = 'k_user_name';
+  static const String userEmail = 'k_user_email';
+  static const String isFirstTime = 'k_is_first_time';
+
+  //validation
+  static const int minPasswordLength = 6;
+  static const int maxPasswordLength = 20;
+  static const int minUsernameLength = 3;
+  static const int maxUsernameLength = 50;
+
+  //pagination
+  static const int itemsPerPage = 10; // limit
+  static const int defaultPageNumber = 1;
+  static const int maxPageSize = 100;
+
+  // api timeouts
+  static const Duration apiConnectTimeout = Duration(seconds: 5);
+  static const Duration apiReceiveTimeout = Duration(seconds: 5);
+  static const Duration apiSendTimeout = Duration(seconds: 5);
+
+  //responsive screens
+  static const double mobileBreakpoint = 700;
+  static const double tabletBreakpoint = 1000;
+
+  static bool isMobile(BuildContext context) =>
+      MediaQuery.sizeOf(context).width < mobileBreakpoint;
+
+  static bool isTablet(BuildContext context) =>
+      MediaQuery.sizeOf(context).width >= mobileBreakpoint &&
+      MediaQuery.sizeOf(context).width < tabletBreakpoint;
+
+  static bool isDesktop(BuildContext context) =>
+      MediaQuery.sizeOf(context).width >= tabletBreakpoint;
+
+  // flexible numbers
+  static const detailsPageFlex = 4;
+  static const mobilePageFlex = 5;
+  static const drawBarPageFlex = 2;
+
+}

@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:clean_architecture/core/errors/failure.dart';
+import 'package:clean_architecture/core/common/type_def/typesdef.dart';
 import 'package:clean_architecture/core/userCases/usecase.dart';
 import 'package:clean_architecture/features/auth/domain/entity/auth_entity.dart';
 import 'package:clean_architecture/features/auth/domain/repo/auth_repo.dart';
@@ -10,7 +9,7 @@ class LoginUseCase extends UseCase<UserEntity, LoginParams> {
   LoginUseCase(this.authRepo);
 
   @override
-  Future<Either<Failure, UserEntity>> call(LoginParams param) async {
+ ResultFuture<UserEntity>  call(LoginParams param) async {
     return await authRepo.login(email: param.email, password: param.password);
   }
 }

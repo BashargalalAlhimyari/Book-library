@@ -1,55 +1,88 @@
-import 'package:clean_architecture/core/constants/app/app_constants.dart';
-import 'package:clean_architecture/core/constants/constants.dart';
+import 'package:clean_architecture/core/common/type_def/typesdef.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/constants/endpoints.dart';
-import 'package:clean_architecture/core/utils/functions/save_books.dart';
+import 'package:clean_architecture/core/errors/exception.dart'; // تأكد من اسم الملف الصحيح (exception او exceptions)
 import 'package:clean_architecture/core/network/api_service.dart';
 import 'package:clean_architecture/features/home/data/models/books_model/books_model.dart';
-import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 
+// 1. الواجهة (Interface) يجب أن تكون واضحة ومحددة
 abstract class HomeRemoteDataSource {
-  Future<List<BookEntity>> fetchBooks({int pageNumber = AppConstants.itemsPerPage});
-  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage});
+  Future<List<BooksModel>> fetchBooks({required int pageNumber});
+  Future<List<BooksModel>> fetchNewsBooks({required int pageNumber});
+  Future<List<BooksModel>> fetchTopRatedBooks({required int pageNumber});
+  Future<List<BooksModel>> fetchTrendingdBooks({required int pageNumber});
+  Future<List<BooksModel>> fetchQuickReadBooks({required int pageNumber});
 }
 
-class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
+class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final ApiService apiService;
 
   HomeRemoteDataSourceImpl({required this.apiService});
 
   @override
-  Future<List<BookEntity>> fetchBooks({int pageNumber = AppConstants.itemsPerPage}) async {
-    var data = await apiService.get(
-      endpoint:
-          "${EndPoint.booksEndpoint}?page=$pageNumber&limit=${AppConstants.itemsPerPage}",
+  Future<List<BooksModel>> fetchBooks({required int pageNumber}) async {
+    final response = await apiService.get(
+      endpoint: EndPoint.trendingBooksEndpoint,
+      query: {'page': pageNumber, 'limit': AppConstants.itemsPerPage},
     );
-    print(data);
-    List<BookEntity> books = getBooksList(data);
 
-    saveBooks(books, keyFeaturedBox);
+    return _handleResponse(response);
+  }
+  @override
+  Future<List<BooksModel>> fetchTrendingdBooks({required int pageNumber}) async {
+    final response = await apiService.get(
+      endpoint: EndPoint.trendingBooksEndpoint,
+      query: {'page': pageNumber, 'limit': AppConstants.itemsPerPage},
+    );
 
-    return books;
+    return _handleResponse(response);
+  }
+  @override
+  Future<List<BooksModel>> fetchTopRatedBooks({required int pageNumber}) async {
+    final response = await apiService.get(
+      endpoint: EndPoint.topRatedBooksEndpoint,
+      query: {'page': pageNumber, 'limit': AppConstants.itemsPerPage},
+    );
+
+    return _handleResponse(response);
   }
 
   @override
-  Future<List<BookEntity>> fetchNewsBooks({int pageNumber = AppConstants.itemsPerPage}) async {
-    var data = await apiService.get(
-      endpoint: "${EndPoint.booksEndpoint}?page=$pageNumber&limit=${AppConstants.itemsPerPage}&sort=newest",
+  Future<List<BooksModel>> fetchNewsBooks({required int pageNumber}) async {
+    final response = await apiService.get(
+      endpoint: EndPoint.newsBooksEndpoint,
+      query: {'page': pageNumber, 'limit': AppConstants.itemsPerPage},
     );
-
-    List<BookEntity> books = getBooksList(data);
-    saveBooks(books, keyFeaturedNewsBox);
-    return books;
+    return _handleResponse(response);
+  }
+   @override
+  Future<List<BooksModel>> fetchQuickReadBooks({required int pageNumber})async {
+ final response = await apiService.get(
+      endpoint: EndPoint.quickReadEndpoint,
+      query: {'page': pageNumber, 'limit': AppConstants.itemsPerPage},
+    );
+    return _handleResponse(response);
   }
 
-  List<BookEntity> getBooksList(dynamic data) {
-    List<BookEntity> books = [];
-
-    if (data is List) {
-      for (var bookMap in data) {
-        books.add(BooksModel.fromJson(bookMap));
-      }
+  List<BooksModel> _handleResponse(dynamic data) {
+    
+    // التحقق من الحالة القادمة من السيرفر
+    if (data['status'] == false) {
+      throw ServerException(
+        message: data['message'] ?? 'Unknown Error Occurred',
+      );
     }
 
-    return books;
+    // التحقق من وجود البيانات
+    if (data['data'] != null && data['data'] is List) {
+      // استخدام map بدلاً من for-loop لسرعة وكفاءة أعلى
+      return List<BooksModel>.from(
+        (data['data'] as List).map((e) => BooksModel.fromJson(e)),
+      );
+    }
+
+    return [];
   }
+  
+ 
 }

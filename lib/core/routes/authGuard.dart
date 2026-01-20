@@ -1,7 +1,7 @@
 // lib/core/utils/routes/router_auth_guard.dart
 
 import 'package:clean_architecture/core/routes/paths_routes.dart';
-import 'package:clean_architecture/core/utils/token_storage.dart';
+import 'package:clean_architecture/core/utils/hive/token_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

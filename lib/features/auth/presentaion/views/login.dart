@@ -1,8 +1,13 @@
-import 'package:clean_architecture/core/theme/colors.dart';
-import 'package:clean_architecture/core/routes/appRouters.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
+import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
+import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
 import 'package:clean_architecture/core/utils/validations/app_validation.dart';
+import 'package:clean_architecture/core/widgets/buttons/custom_button.dart';
+import 'package:clean_architecture/core/widgets/shared/auth_templete.dart';
+import 'package:clean_architecture/core/widgets/shared/custom_snack_bar.dart';
+import 'package:clean_architecture/core/widgets/shared/textFormField.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +21,18 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  // 1️⃣ تعريف المتغيرات
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
   bool _isPasswordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -28,173 +41,144 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  // 2️⃣ دالة تسجيل الدخول
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
+      // إغلاق الكيبورد لتجربة مستخدم أفضل
+      FocusScope.of(context).unfocus();
+
       context.read<AuthCubit>().login(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Welcome ${state.user.username}')),
-            );
-            GoRouter.of(context).go(Routes.homePage);
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: AppColors.primaryGradient,
-            ),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthSuccess) {
+          CustomSnackBar.show(
+            context: context,
+            message: "Welcome back! Login Successful",
+          );
+
+          GoRouter.of(context).go(Routes.homePage);
+        } else if (state is AuthFailure) {
+          CustomSnackBar.show(
+            context: context,
+            message: state.message,
+            isError: true,
+          );
+        }
+      },
+      builder: (context, state) {
+        return AuthTemplate(
+          pageTitle: "مرحباً بعودتك",
+          pageSubtitle: "يرجى إدخال بياناتك للمتابعة",
+
+          body: Form(
+            key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("مرحباً بك",
-                          style: Styles.textStyle40.copyWith(color: Colors.white)),
-                      const SizedBox(height: 10),
-                      Text("سجل دخولك للمتابعة",
-                          style: Styles.textStyle18.copyWith(color: Colors.white)),
-                    ],
-                  ),
+                // --- حقل الإيميل ---
+                CustomTextField(
+                  controller: _emailController,
+                  label: "البريد الإلكتروني",
+                  hintText: "example@gmail.com",
+                  prefixIcon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => Validator.email(value),
                 ),
+
                 const SizedBox(height: 20),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(60),
-                          topRight: Radius.circular(60)),
-                    ),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(30),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            _buildTextField(
-                              controller: _emailController,
-                              label: "البريد الإلكتروني",
-                              icon: Icons.email_outlined,
-                              validator: (value) {
-                                if (value == null || !value.contains('@')) {
-                                  return "أدخل بريداً صالحاً";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            _buildTextField(
-                              controller: _passwordController,
-                              label: "كلمة المرور",
-                              icon: Icons.lock_outline,
-                              isPassword: true,
-                              isPasswordVisible: _isPasswordVisible,
-                              onToggleVisibility: () {
-                                setState(() =>
-                                    _isPasswordVisible = !_isPasswordVisible);
-                              },
-                              validator: (value) => Validator.password(value)
-                            ),
-                            const SizedBox(height: 40),
-                            if (state is AuthLoading)
-                              const CircularProgressIndicator()
-                            else
-                              MaterialButton(
-                                onPressed: _handleLogin,
-                                height: 50,
-                                minWidth: double.infinity,
-                                color: AppColors.primary,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Text("تسجيل الدخول",
-                                    style: Styles.textStyle16.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("ليس لديك حساب؟",
-                                    style: TextStyle(color: Colors.grey)),
-                                TextButton(
-                                  onPressed: () {
-                                    GoRouter.of(context).push(Routes.signUp);
-                                  },
-                                  child: Text("سجل الآن",
-                                      style: Styles.textStyle14.copyWith(
-                                          color: AppColors.primary,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+
+                // --- حقل كلمة المرور ---
+                CustomTextField(
+                  controller: _passwordController,
+                  label: "كلمة المرور",
+                  hintText: "********",
+                  isPassword: true,
+                  isPasswordVisible: _isPasswordVisible,
+                  obscureText: _isPasswordVisible, // التحكم بالإخفاء
+                  prefixIcon: Icons.lock_outline,
+                  onTap: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted:
+                      (_) => _handleLogin(), // الضغط على Enter للدخول مباشرة
+                  validator: (value) => Validator.password(value),
+                ),
+
+                const SizedBox(height: 10),
+
+                Align(
+                  alignment: Alignment.centerLeft, // أو Right حسب لغة التطبيق
+                  child: TextButton(
+                    onPressed: () {
+                      GoRouter.of(context).go(Routes.registerPage);
+                    },
+                    child: Text(
+                      "هل نسيت كلمة المرور؟",
+                      style: Styles.style14(context).copyWith(
+                        color: AppColors.indigo,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                )
+                ),
+
+                const SizedBox(height: 30),
+
+                if (state is AuthLoading)
+                  const Center(child: CircularProgressIndicator())
+                else
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      color: AppColors.indigo,
+                      text: "تسجيل الدخول",
+                      onPressed: _handleLogin,
+                      textColor: Colors.white,
+                    ),
+                  ),
+
+                const SizedBox(height: 25),
+
+                // --- الانتقال لصفحة التسجيل ---
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "ليس لديك حساب؟",
+                      style: Styles.style14(
+                        context,
+                      ).copyWith(color: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        GoRouter.of(context).push(Routes.signUp);
+                      },
+                      child: Text(
+                        "سجل الآن",
+                        style: Styles.style14(context).copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    bool isPassword = false,
-    bool isPasswordVisible = false,
-    VoidCallback? onToggleVisibility,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: isPassword && !isPasswordVisible,
-      validator: validator,
-      style: Styles.textStyle14.copyWith(color: Colors.black),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: Styles.textStyle14.copyWith(color: Colors.grey),
-        prefixIcon: Icon(icon, color: AppColors.primary),
-        suffixIcon: isPassword
-            ? IconButton(
-                icon: Icon(
-                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.grey),
-                onPressed: onToggleVisibility,
-              )
-            : null,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

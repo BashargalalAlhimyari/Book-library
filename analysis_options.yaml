@@ -1,1 +1,11 @@
 include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # 1. هذه هي القاعدة السحرية التي تطلبها
+    prefer_const_constructors: true
+
+    # قواعد إضافية مفيدة جداً (أنصحك بإضافتها أيضاً)
+    prefer_const_literals_to_create_immutables: true # للقوائم []
+    prefer_final_locals: true # لتذكيرك باستخدام final
+    avoid_print: true # ليحذرك من استخدام print بدلاً من log

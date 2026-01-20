@@ -1,37 +1,39 @@
-import 'package:clean_architecture/core/constants/app/app_constants.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/core/network/check_internet.dart';
-import 'package:clean_architecture/core/utils/token_storage.dart';
+import 'package:clean_architecture/core/routes/appRouters.dart';
+import 'package:clean_architecture/core/routes/navigatorKey.dart';
+import 'package:clean_architecture/core/routes/paths_routes.dart';
+import 'package:clean_architecture/core/utils/hive/token_storage.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart'; 
 
- String _baseUrl = EndPoint.baseUrl;
-
-void initialiseDio(Dio _dio) {
-  _dio.options
-    ..baseUrl = _baseUrl
-    ..connectTimeout = AppConstants.apiConnectTimeout
+void initialiseDio(Dio dio) {
+  dio.options
+    ..baseUrl = EndPoint.baseUrl
+    ..connectTimeout = AppConstants.apiConnectTimeout // خليها 5 ثواني أفضل من 1
     ..receiveTimeout = AppConstants.apiReceiveTimeout
+    ..sendTimeout =kIsWeb ? null :  AppConstants.apiSendTimeout
     ..headers = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
     };
 
-  // إضافة Interceptor لمعالجة المهام المتكررة (فحص النت، التوكن)
-  _dio.interceptors.add(
+  dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) async {
-        // A. فحص الإنترنت مركزياً قبل خروج أي طلب
+        // فحص النت
         if (await hasNoInternet()) {
           return handler.reject(
             DioException(
               requestOptions: options,
-              error: 'لا يوجد اتصال بالإنترنت', // رسالة واضحة
+              error: 'لا يوجد اتصال بالإنترنت',
               type: DioExceptionType.connectionError,
             ),
           );
         }
 
-        // B. حقن التوكن تلقائياً إذا وجد
+        // التوكن
         final token = TokenStorage.getToken();
         if (token != null) {
           options.headers['Authorization'] = 'Bearer $token';
@@ -39,7 +41,31 @@ void initialiseDio(Dio _dio) {
 
         return handler.next(options);
       },
-      // يمكنك إضافة onError هنا لمعالجة حالات مثل Token Expired (401)
+      
+      onError: (DioException e, handler) async {
+        if (e.response?.statusCode == 401) {
+          final context = navigatorKey.currentContext;
+          if (context != null) {
+            GoRouter.of(context).go(Routes.loginPage);
+          }
+        }
+
+        // 2. مهم جداً: تمرير الخطأ لباقي التطبيق (الريبو) مهما كان نوعه!
+        // بدون هذا السطر، أي خطأ غير 401 سيجعل التطبيق يعلق للأبد
+        return handler.next(e); 
+      },
     ),
   );
+
+  if (kDebugMode) {
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+      ),
+    );
+  }
 }

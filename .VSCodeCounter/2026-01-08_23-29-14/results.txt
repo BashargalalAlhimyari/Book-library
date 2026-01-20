@@ -1,0 +1,85 @@
+Date : 2026-01-08 23:29:14
+Directory : c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core
+Total : 41 files,  831 codes, 161 comments, 201 blanks, all 1193 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         41 |        831 |        161 |        201 |      1,193 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                         | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                            |         41 |        831 |        161 |        201 |      1,193 |
+| common                                                                                                                       |          3 |         20 |          4 |         11 |         35 |
+| common\enums                                                                                                                 |          2 |         12 |          0 |          4 |         16 |
+| common\type_def                                                                                                              |          1 |          8 |          4 |          7 |         19 |
+| constants                                                                                                                    |          4 |         56 |          8 |         13 |         77 |
+| constants (Files)                                                                                                            |          2 |         16 |          1 |          5 |         22 |
+| constants\app                                                                                                                |          2 |         40 |          7 |          8 |         55 |
+| di                                                                                                                           |          1 |         41 |          8 |          8 |         57 |
+| errors                                                                                                                       |          2 |         10 |          0 |          3 |         13 |
+| l10n                                                                                                                         |          4 |         79 |         78 |         33 |        190 |
+| network                                                                                                                      |          5 |        134 |         21 |         31 |        186 |
+| routes                                                                                                                       |          4 |         73 |          8 |         15 |         96 |
+| theme                                                                                                                        |          6 |        150 |         10 |         29 |        189 |
+| userCases                                                                                                                    |          3 |         16 |          0 |          7 |         23 |
+| utils                                                                                                                        |          8 |        220 |         24 |         48 |        292 |
+| utils (Files)                                                                                                                |          1 |         21 |          4 |          6 |         31 |
+| utils\functions                                                                                                              |          2 |         48 |          0 |          4 |         52 |
+| utils\hive                                                                                                                   |          3 |         32 |          0 |          9 |         41 |
+| utils\validations                                                                                                            |          2 |        119 |         20 |         29 |        168 |
+| widgets                                                                                                                      |          1 |         32 |          0 |          3 |         35 |
+| widgets\buttons                                                                                                              |          1 |         32 |          0 |          3 |         35 |
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                     | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\common\enums\language_type.dart           | Dart     |         11 |          0 |          2 |         13 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\common\enums\password_strength.dart       | Dart     |          1 |          0 |          2 |          3 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\common\type_def\typesdef.dart             | Dart     |          8 |          4 |          7 |         19 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\constants\app\app_constants.dart          | Dart     |         22 |          5 |          6 |         33 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\constants\app\app_strings.dart            | Dart     |         18 |          2 |          2 |         22 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\constants\assets.dart                     | Dart     |          4 |          0 |          1 |          5 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\constants\endpoints.dart                  | Dart     |         12 |          1 |          4 |         17 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\di\service_locator.dart                   | Dart     |         41 |          8 |          8 |         57 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\errors\exception.dart                     | Dart     |          0 |          0 |          1 |          1 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\errors\failure.dart                       | Dart     |         10 |          0 |          2 |         12 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\l10n\app_localizations.dart               | Dart     |         50 |         72 |         20 |        142 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\l10n\app_localizations_ar.dart            | Dart     |         10 |          3 |          5 |         18 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\l10n\app_localizations_en.dart            | Dart     |         10 |          3 |          5 |         18 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\l10n\locale_cubit.dart                    | Dart     |          9 |          0 |          3 |         12 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\network\api_service.dart                  | Dart     |         21 |          1 |         10 |         32 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\network\check_internet.dart               | Dart     |          5 |          0 |          2 |          7 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\network\dio_error_handler.dart            | Dart     |         34 |          2 |          8 |         44 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\network\execute_request.dart              | Dart     |         13 |         10 |          2 |         25 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\network\initial_dio.dart                  | Dart     |         61 |          8 |          9 |         78 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\routes\appRouters.dart                    | Dart     |         39 |          4 |          3 |         46 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\routes\authGuard.dart                     | Dart     |         25 |          4 |          7 |         36 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\routes\navigatorKey.dart                  | Dart     |          2 |          0 |          2 |          4 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\routes\paths_routes.dart                  | Dart     |          7 |          0 |          3 |         10 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\animation.dart                      | Dart     |          0 |          0 |          1 |          1 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\app_dimensions.dart                 | Dart     |          0 |          0 |          1 |          1 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\app_shadows.dart                    | Dart     |          0 |          0 |          1 |          1 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\colors.dart                         | Dart     |         28 |          5 |          7 |         40 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\styles.dart                         | Dart     |         72 |          4 |         15 |         91 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\theme\theme.dart                          | Dart     |         50 |          1 |          4 |         55 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\userCases\no_param_use_case.dart          | Dart     |          5 |          0 |          2 |          7 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\userCases\use_case.dart                   | Dart     |          5 |          0 |          2 |          7 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\userCases\usecase.dart                    | Dart     |          6 |          0 |          3 |          9 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\bloc_observer.dart                  | Dart     |         21 |          4 |          6 |         31 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\functions\app_bloc_providers.dart   | Dart     |         33 |          0 |          3 |         36 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\functions\init_app_configs.dart     | Dart     |         15 |          0 |          1 |         16 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\hive\init_hive.dart                 | Dart     |          7 |          0 |          1 |          8 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\hive\save_books.dart                | Dart     |          6 |          0 |          2 |          8 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\hive\token_storage.dart             | Dart     |         19 |          0 |          6 |         25 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\validations\app_validation.dart     | Dart     |        102 |         12 |         21 |        135 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\utils\validations\validation_pattern.dart | Dart     |         17 |          8 |          8 |         33 |
+| c:\Users\Bashar Al-himyary\Desktop\All Project\flutter\clean_architecture\lib\core\widgets\buttons\custom_button.dart        | Dart     |         32 |          0 |          3 |         35 |
+| Total                                                                                                                        |          |        831 |        161 |        201 |      1,193 |
++------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
