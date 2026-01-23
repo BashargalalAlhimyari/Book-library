@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:clean_architecture/books_app.dart';
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/di/service_locator.dart';
 import 'package:clean_architecture/core/utils/bloc_observer.dart';
 import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
-import 'package:clean_architecture/core/utils/hive/hive_setup.dart';
 import 'package:clean_architecture/core/utils/hive/init_hive.dart';
 import 'package:clean_architecture/core/utils/hive/token_storage.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
@@ -20,7 +20,6 @@ Future<void> main() async {
   await CacheHelper.init();
   setupServiceLocator();
 
-
   //  await CacheHelper.init();
   //  HiveService.init();
   runApp(const BooksApp());
@@ -31,6 +30,9 @@ class BooksApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainBooksApp();
+// 1. Get the string first
+
+// 2. Convert it to int safely
+   return MainBooksApp();
   }
 }

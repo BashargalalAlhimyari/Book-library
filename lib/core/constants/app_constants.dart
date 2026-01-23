@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppConstants {
@@ -25,7 +26,7 @@ abstract class AppConstants {
   static const String language = 'LANGUAGE';
   static const String theme = 'THEME';
   static const String onBoarding = 'ON_BOARDING';
-   static const String userId = 'k_user_id';
+  static const String userId = 'k_user_id';
   static const String userName = 'k_user_name';
   static const String userEmail = 'k_user_email';
   static const String isFirstTime = 'k_is_first_time';
@@ -65,4 +66,11 @@ abstract class AppConstants {
   static const mobilePageFlex = 5;
   static const drawBarPageFlex = 2;
 
+  // user data 
+  static int userIdValue =
+      int.tryParse(CacheHelper.getString(key: AppConstants.userId)!)!;
+  static String userNameValue =
+      CacheHelper.getString(key: AppConstants.userName)!;
+  static String userEmailValue =
+      CacheHelper.getString(key: AppConstants.userEmail)!;
 }

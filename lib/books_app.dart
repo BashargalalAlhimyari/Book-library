@@ -47,7 +47,7 @@ class _MainBooksAppState extends State<MainBooksApp> {
             ],
             routerConfig: AppRouters.routers,
             theme: ThemeApp.lightTheme,
-            darkTheme: ThemeApp.darkTheme,
+            darkTheme: ThemeApp.lightTheme,
             themeMode: ThemeMode.system,
           );
         },

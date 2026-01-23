@@ -11,17 +11,24 @@ class ApiService {
     initialiseDio(this._dio);
   }
 
-
-  Future<dynamic> get({required String endpoint, Map<String, dynamic>? query}) async {
-
+  Future<dynamic> get({
+    required String endpoint,
+    Map<String, dynamic>? query,
+  }) async {
     return performRequest(_dio.get(endpoint, queryParameters: query));
   }
 
-  Future<dynamic> post({required String endpoint, required Map<String, dynamic> data}) async {
+  Future<dynamic> post({
+    required String endpoint,
+    required Map<String, dynamic> data,
+  }) async {
     return performRequest(_dio.post(endpoint, data: data));
   }
 
-  Future<dynamic> put({required String endpoint, required Map<String, dynamic> data}) async {
+  Future<dynamic> put({
+    required String endpoint,
+    required Map<String, dynamic> data,
+  }) async {
     return performRequest(_dio.put(endpoint, data: data));
   }
 
@@ -29,5 +36,18 @@ class ApiService {
     return performRequest(_dio.delete(endpoint));
   }
 
-
+  Future<dynamic> download({
+    required String finalUrl,
+    required String path,
+  }) async {
+    return await _dio.download(
+        finalUrl,
+        path,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+             print("📥 جاري التحميل: ${(received / total * 100).toStringAsFixed(0)}%");
+          }
+        },
+      );
+  }
 }

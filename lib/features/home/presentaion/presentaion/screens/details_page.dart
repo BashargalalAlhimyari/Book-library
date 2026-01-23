@@ -23,7 +23,7 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       // ✅ 1. شريط سفلي ثابت لسهولة الوصول لأزرار الشراء
-      bottomNavigationBar: BuildBottomAction(book: book,),
+      bottomNavigationBar: BuildBottomAction(book: book),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -70,10 +70,6 @@ class DetailsPage extends StatelessWidget {
     );
   }
 
-  // ================= قسم الهيدر (صورة الغلاف) =================
-
-  // ================= قسم العنوان والمؤلف =================
-
   // ================= قسم الإحصائيات (السعر، التقييم) =================
   Widget _buildStatsRow(BuildContext context) {
     return Container(
@@ -90,15 +86,34 @@ class DetailsPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // التقييم
-          BuildStatItem(context: context, icon: Icons.star_rounded, iconColor: AppColors.amber, value: "${book.averageRating ?? 0}", label: "Rating"),
+          BuildStatItem(
+            context: context,
+            icon: Icons.star_rounded,
+            iconColor: AppColors.amber,
+            value: "${book.averageRating ?? 0}",
+            label: "Rating",
+          ),
           _buildDivider(),
           // عدد الصفحات (أو عدد التقييمات)
-          BuildStatItem(context: context, icon: Icons.people_outline, iconColor: AppColors.primary, value: "${book.ratingCount ?? 0}", label: "Reviews"),
+          BuildStatItem(
+            context: context,
+            icon: Icons.people_outline,
+            iconColor: AppColors.primary,
+            value: "${book.ratingCount ?? 0}",
+            label: "Reviews",
+          ),
           _buildDivider(),
           // السعر
-          BuildStatItem(context: context, icon: Icons.attach_money, iconColor: AppColors.green, value: book.price != null && book.price != 0
+          BuildStatItem(
+            context: context,
+            icon: Icons.attach_money,
+            iconColor: AppColors.green,
+            value:
+                book.price != null && book.price != 0
                     ? "${book.price}"
-                    : "Free", label: "Price"),
+                    : "Free",
+            label: "Price",
+          ),
         ],
       ),
     );
@@ -107,6 +122,4 @@ class DetailsPage extends StatelessWidget {
   Widget _buildDivider() {
     return Container(height: 30, width: 1, color: AppColors.grey300);
   }
-
 }
-

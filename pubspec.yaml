@@ -25,6 +25,9 @@ dependencies:
   intl: ^0.19.0
   shared_preferences: ^2.5.3
   palette_generator: ^0.3.3+7
+  path_provider: ^2.1.5
+  flutter_pdfview: ^1.4.4
+  equatable: ^2.0.8
 
 
 dev_dependencies:

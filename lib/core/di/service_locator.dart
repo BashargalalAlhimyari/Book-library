@@ -14,9 +14,17 @@ import 'package:clean_architecture/features/home/domain/user_cases/fetch_quick_r
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_top_rated_books_use_case.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_trending_books_use_case.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart';
+import 'package:clean_architecture/features/home/domain/user_cases/get_last_read_book_use_case.dart';
+import 'package:clean_architecture/features/home/domain/user_cases/save_reading_progress_use_case.dart';
+import 'package:clean_architecture/features/readingProgress/data/data_course/reading_progress_local_data_source.dart';
+import 'package:clean_architecture/features/readingProgress/data/data_course/reading_progress_remote_data_source.dart';
+import 'package:clean_architecture/features/readingProgress/data/repo/reading_progress_repo_impl.dart';
+import 'package:clean_architecture/features/readingProgress/domain/repo/reading_progress_repo.dart';
+import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -26,7 +34,10 @@ void setupServiceLocator() {
   // Core
   getIt.registerLazySingleton<ApiService>(() => ApiService(Dio()));
 
-  // Features - Auth
+  //========================================================
+  //Feature Auth
+  //========================================================
+
   getIt.registerFactory<AuthCubit>(
     () => AuthCubit(loginUseCase: getIt(), registerUseCase: getIt()),
   );
@@ -38,7 +49,9 @@ void setupServiceLocator() {
     () => AuthRemoteDataSourceImpl(getIt()),
   );
 
-  // Features - Home
+  //========================================================
+  //Feature Home Page
+  //========================================================
 
   // 1. Data Sources
   getIt.registerLazySingleton<HomeLocalDataSource>(
@@ -56,37 +69,24 @@ void setupServiceLocator() {
     ),
   );
 
-  // 👇👇👇 هذا هو الجزء الذي كان ناقصاً وأضفته لك 👇👇👇
-
-  // 3. Use Cases (يجب تسجيلها قبل الكيوبت)
+  //3. Use cases
+  getIt.registerLazySingleton<FetchNewestUseCase>(
+    () => FetchNewestUseCase(getIt<HomeRepoImpl>()),
+  );
+  getIt.registerLazySingleton<FetchTopRatedBooksUseCase>(
+    () => FetchTopRatedBooksUseCase(getIt<HomeRepoImpl>()),
+  );
+  getIt.registerLazySingleton<FetchTrendingBooksUseCase>(
+    () => FetchTrendingBooksUseCase(getIt<HomeRepoImpl>()),
+  );
+  getIt.registerLazySingleton<FetchQuickReadBooksUseCase>(
+    () => FetchQuickReadBooksUseCase(getIt<HomeRepoImpl>()),
+  );
   getIt.registerLazySingleton<FetchBooksUseCase>(
-    // هنا نقول لـ GetIt: خذ الـ Repo المسجل وضعه داخل الـ UseCase
     () => FetchBooksUseCase(getIt<HomeRepoImpl>()),
   );
 
-
-
-
-
-
-  getIt.registerLazySingleton<FetchNewestUseCase>(
-    () => FetchNewestUseCase( getIt<HomeRepoImpl>()),
-  );
-  getIt.registerLazySingleton<FetchTopRatedBooksUseCase>(
-    () => FetchTopRatedBooksUseCase( getIt<HomeRepoImpl>()),
-  );
-  getIt.registerLazySingleton<FetchTrendingBooksUseCase>(
-    () => FetchTrendingBooksUseCase( getIt<HomeRepoImpl>()),
-  );
-  getIt.registerLazySingleton<FetchQuickReadBooksUseCase>(
-    () => FetchQuickReadBooksUseCase( getIt<HomeRepoImpl>()),
-  );
-
-
-
-  // 👆👆👆 نهاية الجزء المضاف 👆👆👆
-
-  // 4. Cubits (الآن الكيوبت سيجد الـ UseCase جاهزاً)
+  // 4. Cubit
   getIt.registerLazySingleton<TopRatedBooksCubit>(
     () => TopRatedBooksCubit(getIt<FetchTopRatedBooksUseCase>()),
   );
@@ -98,5 +98,43 @@ void setupServiceLocator() {
   );
   getIt.registerLazySingleton<QuickReadBooksCubit>(
     () => QuickReadBooksCubit(getIt<FetchQuickReadBooksUseCase>()),
+  );
+  getIt.registerFactory<SelectedBookCubit>(() => SelectedBookCubit());
+
+  //========================================================
+  //Feature Reading Progress
+  //========================================================
+
+  // 1. Data Sources
+  getIt.registerLazySingleton<ReadingProgressLocalDataSource>(
+    () => ReadingProgressLocalDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<ReadingProgressRemoteDataSource>(
+    () => ReadingProgressRemoteDataSourceImpl(apiService: getIt()),
+  );
+
+  // 2. Repository
+  getIt.registerLazySingleton<ReadingProgressRepo>(
+    () => ReadingProgressRepoImpl(
+      remoteDataSource: getIt(),
+      localDataSource: getIt(),
+    ),
+  );
+
+  //3. Use cases
+  getIt.registerLazySingleton<SaveReadingProgressUseCase>(
+    () => SaveReadingProgressUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<GetLastReadBookUseCase>(
+    () => GetLastReadBookUseCase(getIt()),
+  );
+
+  // 4. Cubit
+  // 4. Cubit
+  getIt.registerLazySingleton<ReadingProgressCubit>(
+    () => ReadingProgressCubit(
+      saveReadingProgressUseCase: getIt(),
+      getLastReadBookUseCase: getIt(),
+    ),
   );
 }

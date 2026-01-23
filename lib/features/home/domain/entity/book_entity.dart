@@ -42,6 +42,9 @@ class BookEntity {
   @HiveField(11)
   final String? fileUrl; // رابط تحميل الكتاب
 
+  @HiveField(12)
+  final int? pageCount; // رابط تحميل الكتاب
+
  const BookEntity({
     required this.bookId,
     required this.title,
@@ -55,5 +58,6 @@ class BookEntity {
     this.averageRating,
     this.ratingCount,
     this.fileUrl,
+    this.pageCount,
   });
 }

@@ -29,6 +29,7 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       averageRating: fields[9] as num?,
       ratingCount: fields[10] as int?,
       fileUrl: fields[11] as String?,
+      pageCount: fields[12] as int?,
     );
   }
 
@@ -58,6 +59,8 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       ..write(obj.averageRating)
       ..writeByte(10)
       ..write(obj.ratingCount)
+      ..writeByte(11)
+      ..write(obj.fileUrl)
       ..writeByte(11)
       ..write(obj.fileUrl);
   }

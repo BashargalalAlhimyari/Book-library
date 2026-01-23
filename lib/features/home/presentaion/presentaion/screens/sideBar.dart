@@ -15,7 +15,6 @@ class DesktopSideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       decoration: BoxDecoration(
@@ -83,14 +82,14 @@ class DesktopSideMenu extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${CacheHelper.getString(key: AppConstants.userName)}",
+                      "${AppConstants.userEmailValue}",
                       style: Styles.style14(context).copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.red,
                       ),
                     ),
                     Text(
-                      "${CacheHelper.getString(key: AppConstants.userEmail) ?? "مستخدم زائر"}",
+                      "${AppConstants.userNameValue ?? "مستخدم زائر"}",
                       style: Styles.style12(
                         context,
                       ).copyWith(color: Colors.grey),

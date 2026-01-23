@@ -16,6 +16,7 @@ class BooksModel extends BookEntity {
     required super.averageRating,
     required super.ratingCount,
     required super.fileUrl,
+    required super.pageCount,
   });
 
   factory BooksModel.fromJson(JsonMap json) {
@@ -24,6 +25,8 @@ class BooksModel extends BookEntity {
       if (path == null) return ''; // حماية من null
       path = path.trim();
       if (path.isEmpty) return '';
+      // Normalize path separators
+      path = path.replaceAll('\\', '/');
       if (path.startsWith('http')) return path;
       return EndPoint.uploadsBaseUrl + path;
     }
@@ -101,6 +104,7 @@ class BooksModel extends BookEntity {
       // التأكد أن هذه القيم num/int
       averageRating: json['avgRating'] is num ? json['avgRating'] : 0, 
       ratingCount: json['ratingCount'] is int ? json['ratingCount'] : 0,
+      pageCount: json['pageCount'] is int ? json['pageCount'] : 0,
     );
   }
 
@@ -118,5 +122,6 @@ class BooksModel extends BookEntity {
         'fileUrl': fileUrl,
         'avgRating': averageRating,
         'ratingCount': ratingCount,
+        'pageCount': pageCount,
       };
 }

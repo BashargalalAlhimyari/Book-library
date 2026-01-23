@@ -1,5 +1,7 @@
+import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/di/service_locator.dart';
 import 'package:clean_architecture/core/l10n/locale_cubit.dart';
+import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
 import 'package:clean_architecture/features/home/data/repos/home_repo_impl.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_books_use_case.dart'
     show FetchBooksUseCase;
@@ -13,7 +15,9 @@ import 'package:clean_architecture/features/home/presentaion/presentaion/manager
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart';
+import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart';
 
@@ -23,6 +27,9 @@ List<BlocProvider> getAppBlocProviders() {
     BlocProvider<NavigateCubit>(create: (context) => NavigateCubit()),
     BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
     BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+    BlocProvider<SelectedBookCubit>(
+      create: (context) => getIt<SelectedBookCubit>(),
+    ),
 
     BlocProvider<TopRatedBooksCubit>(
       create:
@@ -37,6 +44,12 @@ List<BlocProvider> getAppBlocProviders() {
     ),
     BlocProvider<QuickReadBooksCubit>(
       create: (context) => getIt.get<QuickReadBooksCubit>()..fetchQuickBooks(),
+    ),
+    BlocProvider<ReadingProgressCubit>(
+      create:
+          (context) =>
+              getIt.get<ReadingProgressCubit>()
+                ..fetchLastReadBook(AppConstants.userIdValue),
     ),
   ];
 }
