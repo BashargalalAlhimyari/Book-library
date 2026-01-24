@@ -1,7 +1,6 @@
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
-import 'package:equatable/equatable.dart';
 
-class ReadingProgressEntity extends Equatable {
+class ReadingProgressEntity  {
   final int userId;
   final int bookId;
   final int currentPage;

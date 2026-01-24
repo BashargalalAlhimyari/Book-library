@@ -23,7 +23,7 @@ class ReadingProgressRepoImpl implements ReadingProgressRepo {
       final progressModel = ReadingProgressModel.fromEntity(progress);
 
       // 1. ALWAYS save to local storage first (Zero Data Loss)
-      await localDataSource.cacheLastReadBook(progressModel);
+      await localDataSource.cacheItem(progressModel);
 
       // 2. Check internet connectivity
       final connectivityResult = await Connectivity().checkConnectivity();
@@ -45,6 +45,7 @@ class ReadingProgressRepoImpl implements ReadingProgressRepo {
 
   @override
   ResultFuture<ReadingProgressEntity?> getLastReadBook(int userId) async {
+
     // 1. Check internet connectivity
     final connectivityResult = await Connectivity().checkConnectivity();
 
@@ -55,18 +56,22 @@ class ReadingProgressRepoImpl implements ReadingProgressRepo {
 
         if (remoteProgress != null) {
           // 3. If successful, update local cache
-          await localDataSource.cacheLastReadBook(remoteProgress);
+          await localDataSource.cacheItem(remoteProgress);
           return Right(remoteProgress);
         }
       } catch (e) {
         // If remote fails, fall through to local
-        print("Remote fetch failed: $e, falling back to local.");
+        print("🔴 Remote fetch or Cache save failed: $e");
       }
     }
 
     // 4. Offline or Remote Failed: Fetch from Local Storage
     try {
-      final localProgress = await localDataSource.getLastReadBook();
+      final localProgress = await localDataSource.getCacheItem();
+
+      if (localProgress == null) {
+        return const Left(CacheFailure("No cached progress found"));
+      }
       return Right(localProgress);
     } catch (e) {
       return Left(CacheFailure(e.toString()));

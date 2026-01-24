@@ -19,7 +19,7 @@ class BannerCard extends StatelessWidget {
             ? 1
             : lastReadBook.book?.pageCount ?? 0;
     final double progressValue = (current / total).clamp(0.0, 1.0);
-
+   
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 600),
       child: SizedBox(

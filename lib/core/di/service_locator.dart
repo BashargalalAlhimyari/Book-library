@@ -18,8 +18,6 @@ import 'package:clean_architecture/features/home/presentaion/presentaion/manager
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart';
-import 'package:clean_architecture/features/home/domain/user_cases/get_last_read_book_use_case.dart';
-import 'package:clean_architecture/features/home/domain/user_cases/save_reading_progress_use_case.dart';
 import 'package:clean_architecture/features/readingProgress/data/data_course/reading_progress_local_data_source.dart';
 import 'package:clean_architecture/features/readingProgress/data/data_course/reading_progress_remote_data_source.dart';
 import 'package:clean_architecture/features/readingProgress/data/repo/reading_progress_repo_impl.dart';
@@ -27,6 +25,9 @@ import 'package:clean_architecture/features/readingProgress/domain/repo/reading_
 import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../features/readingProgress/domain/useCase/get_last_read_book_use_case.dart';
+import '../../features/readingProgress/domain/useCase/save_reading_progress_use_case.dart';
 
 final getIt = GetIt.instance;
 

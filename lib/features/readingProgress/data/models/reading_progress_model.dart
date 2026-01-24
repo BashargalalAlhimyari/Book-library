@@ -1,16 +1,58 @@
-import 'package:clean_architecture/features/home/data/models/books_model/books_model.dart';
+import 'package:clean_architecture/features/home/data/models/books_model.dart';
+import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/readingProgress/domain/entity/reading_progress_entity.dart';
+import 'package:hive/hive.dart';
 
+part 'reading_progress_model.g.dart';
+
+@HiveType(typeId: 5)
 class ReadingProgressModel extends ReadingProgressEntity {
+  
+  @HiveField(0)
+  @override
+  final int userId;
+
+  @HiveField(1)
+  @override
+  final int bookId;
+
+  @HiveField(2)
+  @override
+  final int currentPage;
+
+  @HiveField(3)
+  @override
+  final int totalPages;
+
+  @HiveField(4)
+  @override
+  final bool isCompleted;
+
+  @HiveField(5)
+  @override
+  final DateTime? lastReadAt;
+
+  @HiveField(6)
+  @override
+  final BooksModel? book; 
+
   const ReadingProgressModel({
-    required super.userId,
-    required super.bookId,
-    required super.currentPage,
-    required super.totalPages,
-    required super.isCompleted,
-    super.lastReadAt,
-    super.book,
-  });
+    required this.userId,
+    required this.bookId,
+    required this.currentPage,
+    required this.totalPages,
+    required this.isCompleted,
+    this.lastReadAt,
+    this.book,
+  }) : super(
+          userId: userId,
+          bookId: bookId,
+          currentPage: currentPage,
+          totalPages: totalPages,
+          isCompleted: isCompleted,
+          lastReadAt: lastReadAt,
+          book: book,
+        );
 
   factory ReadingProgressModel.fromJson(Map<String, dynamic> json) {
     return ReadingProgressModel(
@@ -32,10 +74,11 @@ class ReadingProgressModel extends ReadingProgressEntity {
       'totalPages': totalPages,
       'isCompleted': isCompleted,
       'lastReadAt': lastReadAt?.toIso8601String(),
-      'book': book != null ? (book as BooksModel).toJson() : null,
+      'Book': book?.toJson(),
     };
   }
 
+  // ✅ التصحيح هنا: نستخدم BooksModel.fromEntity لإنشاء موديل جديد
   factory ReadingProgressModel.fromEntity(ReadingProgressEntity entity) {
     return ReadingProgressModel(
       userId: entity.userId,
@@ -44,7 +87,9 @@ class ReadingProgressModel extends ReadingProgressEntity {
       totalPages: entity.totalPages,
       isCompleted: entity.isCompleted,
       lastReadAt: entity.lastReadAt,
-      book: entity.book,
+      
+      // ✅ التعديل: إذا وجد الكتاب، نقوم بتحويله باستخدام الدالة التي أنشأناها في الخطوة 1
+      book: entity.book != null ? BooksModel.fromEntity(entity.book!) : null,
     );
   }
 }

@@ -12,7 +12,7 @@ class QuickReadBooksCubit extends Cubit<QuickReadBooksState> {
 
   QuickReadBooksCubit(this.fetchQuickReadBooksUseCase) : super(QuickReadInitial());
 
-  int _nextPage = 1; 
+  int _nextPage = 0; 
   bool _isLoading = false; 
   final List<BookEntity> _allBooks = [];
 
@@ -20,7 +20,7 @@ class QuickReadBooksCubit extends Cubit<QuickReadBooksState> {
     if (_isLoading) return; 
     _isLoading = true;
 
-    if (_nextPage == 1) {
+    if (_nextPage == 0) {
       emit(QuickReadLoading()); 
     } else {
       emit(QuickReadPaginationLoading(books: List.from(_allBooks))); 
@@ -32,7 +32,7 @@ class QuickReadBooksCubit extends Cubit<QuickReadBooksState> {
       (failure) {
         _isLoading = false; // ✅ مهم جداً لإيقاف اللودنج والسماح بالمحاولة مجدداً
         
-        if (_nextPage == 1) {
+        if (_nextPage == 0) {
           emit(QuickReadFailure(errMessage: failure.message));
         } else {
           emit(QuickReadPaginationFailure(errMessage: failure.message, books: List.from(_allBooks)));

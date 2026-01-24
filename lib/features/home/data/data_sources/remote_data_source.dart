@@ -3,7 +3,7 @@ import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/constants/endpoints.dart';
 import 'package:clean_architecture/core/errors/exception.dart'; // تأكد من اسم الملف الصحيح (exception او exceptions)
 import 'package:clean_architecture/core/network/api_service.dart';
-import 'package:clean_architecture/features/home/data/models/books_model/books_model.dart';
+import 'package:clean_architecture/features/home/data/models/books_model.dart';
 
 // 1. الواجهة (Interface) يجب أن تكون واضحة ومحددة
 abstract class HomeRemoteDataSource {

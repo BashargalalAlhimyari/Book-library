@@ -31,6 +31,7 @@ class DisplayBookBotton extends StatelessWidget {
                 'bookId': progressEntity.bookId,
                 'userId': progressEntity.userId,
                 'currentPage': progressEntity.currentPage,
+                'book': progressEntity.book,
               },
             );
           } else {

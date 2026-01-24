@@ -1,6 +1,7 @@
 import 'dart:async'; // Required for Completer
 import 'dart:io';
 import 'package:clean_architecture/core/widgets/shared/custom_snack_bar.dart';
+import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/readingProgress/domain/entity/reading_progress_entity.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,15 @@ class PdfViewerPage extends StatefulWidget {
   final int bookId;
   final int userId;
   final int? currentPage;
+  final BookEntity? book;
+
   const PdfViewerPage({
     super.key,
     required this.filePath,
     required this.bookId,
     required this.userId, 
      this.currentPage =0,
+     this.book,
   });
 
   @override
@@ -59,6 +63,7 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
       currentPage: currentPage!,
       totalPages: pages!,
       isCompleted: currentPage == pages! - 1,
+      book: widget.book,
     );
 
     try {

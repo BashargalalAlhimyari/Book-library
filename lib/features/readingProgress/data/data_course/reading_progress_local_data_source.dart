@@ -1,30 +1,31 @@
-import 'dart:convert';
+import 'package:clean_architecture/core/constants/app_constants.dart';
+import 'package:clean_architecture/core/utils/hive/hive_data.dart'
+    as HiveData; // نستخدم alias لتجنب تداخل الأسماء
 import 'package:clean_architecture/features/readingProgress/data/models/reading_progress_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/utils/hive/hive_data.dart';
 
 abstract class ReadingProgressLocalDataSource {
-  Future<void> cacheLastReadBook(ReadingProgressModel progress);
-  Future<ReadingProgressModel?> getLastReadBook();
+  Future<void> cacheItem(ReadingProgressModel progress);
+  Future<ReadingProgressModel?> getCacheItem();
 }
 
-class ReadingProgressLocalDataSourceImpl implements ReadingProgressLocalDataSource {
-  static const String CACHED_READING_PROGRESS = "CACHED_READING_PROGRESS";
-
+class ReadingProgressLocalDataSourceImpl
+    implements ReadingProgressLocalDataSource {
   @override
-  Future<void> cacheLastReadBook(ReadingProgressModel progress) async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonString = json.encode(progress.toJson());
-    await prefs.setString(CACHED_READING_PROGRESS, jsonString);
+  Future<void> cacheItem(ReadingProgressModel progress) async {
+    print("💾 Caching ReadingProgress: ${progress.book?.title}");
+    await saveSingleItem<ReadingProgressModel>(progress, AppConstants.boxReadingProgress, "ReadingProgress");
+    print("✅ Cached Successfully");
   }
 
   @override
-  Future<ReadingProgressModel?> getLastReadBook() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString(CACHED_READING_PROGRESS);
-    
-    if (jsonString != null) {
-      return ReadingProgressModel.fromJson(json.decode(jsonString));
-    }
-    return null;
+  Future<ReadingProgressModel?> getCacheItem() async {
+    final item = getSingleItem<ReadingProgressModel>(
+      AppConstants.boxReadingProgress,
+      "ReadingProgress",
+    );
+    print("📂 Retrieved from Cache: ${item?.book?.title}");
+    return item;
   }
 }

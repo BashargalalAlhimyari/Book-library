@@ -6,15 +6,19 @@ import 'package:clean_architecture/core/utils/bloc_observer.dart';
 import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
 import 'package:clean_architecture/core/utils/hive/init_hive.dart';
 import 'package:clean_architecture/core/utils/hive/token_storage.dart';
+import 'package:clean_architecture/features/home/data/models/books_model.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
+import 'package:clean_architecture/features/readingProgress/data/models/reading_progress_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Hive.initFlutter();
-  Hive.registerAdapter<BookEntity>(BookEntityAdapter());
+  Hive.registerAdapter<BooksModel>(BooksModelAdapter());
+  Hive.registerAdapter<ReadingProgressModel>(ReadingProgressModelAdapter());
   await initHive();
   await TokenStorage.init();
   await CacheHelper.init();

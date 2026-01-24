@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:clean_architecture/features/home/domain/user_cases/get_last_read_book_use_case.dart';
-import 'package:clean_architecture/features/home/domain/user_cases/save_reading_progress_use_case.dart';
 import 'package:clean_architecture/features/readingProgress/domain/entity/reading_progress_entity.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../../domain/useCase/get_last_read_book_use_case.dart'
+    show GetLastReadBookUseCase;
+import '../../../domain/useCase/save_reading_progress_use_case.dart'
+    show SaveReadingProgressUseCase;
 
 part 'reading_progress_state.dart';
 
@@ -31,6 +34,7 @@ class ReadingProgressCubit extends Cubit<ReadingProgressState> {
   Future<void> fetchLastReadBook(int userId) async {
     emit(ReadingProgressLoading());
     final result = await getLastReadBookUseCase.call(userId);
+
     result.fold(
       (failure) => emit(ReadingProgressFailure(failure.message)),
       (progress) => emit(ReadingProgressSuccess(progress)),

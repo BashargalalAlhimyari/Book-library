@@ -55,6 +55,7 @@ abstract class AppRouters {
             bookId: args['bookId'],
             userId: args['userId'],
             currentPage: args['currentPage'] ?? 0,
+            book: args['book'],
           );
         },
       ),

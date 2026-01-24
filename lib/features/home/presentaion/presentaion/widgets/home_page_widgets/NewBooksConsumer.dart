@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/widgets/loading/book_grid_shimmer.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/NewBookCard.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,7 @@ class Newbooksconsumer extends StatelessWidget {
             child: Icon(Icons.error, size: 50, color: Colors.yellow),
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(color: Colors.amber),
-          );
+          return const BookGridShimmer();
         }
       },
     );

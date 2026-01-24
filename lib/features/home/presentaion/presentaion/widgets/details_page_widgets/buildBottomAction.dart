@@ -52,6 +52,7 @@ class _BuildBottomActionState extends State<BuildBottomAction> {
               'filePath': file.path,
               'bookId': int.tryParse(widget.book.bookId) ?? 0,
               'userId': AppConstants.userIdValue,
+              'book': widget.book,
             },
           );
         }

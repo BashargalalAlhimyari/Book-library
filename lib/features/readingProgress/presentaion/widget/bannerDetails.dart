@@ -17,6 +17,10 @@ class BannerDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      print("🔵 Fetched from local cache: ${lastReadBook.book}");
+      print("🔵 Fetched from local cache: ${lastReadBook.totalPages}");
+          print("🔵 Fetched from local cache: $progressValue");
+          print("🔵 Fetched from local cache: $progressValue");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,

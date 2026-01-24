@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/widgets/loading/banner_shimmer.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/widget/BannerCard.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,7 @@ class Bannercardconsumer extends StatelessWidget {
     return BlocConsumer<ReadingProgressCubit, ReadingProgressState>(
       builder: (context, state) {
         if (state is ReadingProgressLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: Colors.amber),
-          );
+          return const BannerShimmer();
         }
         if (state is ReadingProgressFailure) {
           return const Center(
@@ -25,9 +24,7 @@ class Bannercardconsumer extends StatelessWidget {
         if (state is ReadingProgressSuccess) {
           return BannerCard(lastReadBook: state.lastReadBook!);
         } else {
-          return const Center(
-            child: CircularProgressIndicator(color: Colors.amber),
-          );
+          return const BannerShimmer();
         }
       },
       listener: (context, state) {

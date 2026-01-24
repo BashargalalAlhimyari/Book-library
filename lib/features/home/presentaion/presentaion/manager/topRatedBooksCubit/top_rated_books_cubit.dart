@@ -9,7 +9,7 @@ class TopRatedBooksCubit extends Cubit<TopRatedBooksState> {
 
   TopRatedBooksCubit(this.fetchTopRatedBooksUseCase) : super(TopRelatedInitial());
 
-  int _nextPage = 1; 
+  int _nextPage = 0; 
   bool _isLoading = false; 
   final List<BookEntity> _allBooks = [];
 
@@ -17,7 +17,7 @@ class TopRatedBooksCubit extends Cubit<TopRatedBooksState> {
     if (_isLoading) return; 
     _isLoading = true;
 
-    if (_nextPage == 1) {
+    if (_nextPage == 0) {
       emit(TopRelatedLoading()); 
     } else {
       emit(TopRelatedPaginationLoading(books: List.from(_allBooks))); 
@@ -29,7 +29,7 @@ class TopRatedBooksCubit extends Cubit<TopRatedBooksState> {
       (failure) {
         _isLoading = false; // ✅ مهم جداً لإيقاف اللودنج والسماح بالمحاولة مجدداً
         
-        if (_nextPage == 1) {
+        if (_nextPage == 0) {
           emit(TopRelatedFailure(errMessage: failure.message));
         } else {
           emit(TopRelatedPaginationFailure(errMessage: failure.message, books: List.from(_allBooks)));

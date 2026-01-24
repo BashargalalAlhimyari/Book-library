@@ -35,9 +35,7 @@ class ReadingProgressRemoteDataSourceImpl
         endpoint: '${EndPoint.lastReadEndpoint}',
       );
 
-      print("[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]");
-      print(response);
-      print("[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]");
+    
       if (response == null) return null;
 
       final data = response['data'] ?? response;

@@ -1,3 +1,4 @@
+import 'package:clean_architecture/core/widgets/loading/trending_list_shimmer.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
@@ -56,9 +57,7 @@ class _TrendingbooksconsumerState extends State<Trendingbooksconsumer> {
             child: Icon(Icons.error, size: 50, color: Colors.yellow),
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(color: Colors.amber),
-          );
+          return const TrendingListShimmer();
         }
       },
     );
