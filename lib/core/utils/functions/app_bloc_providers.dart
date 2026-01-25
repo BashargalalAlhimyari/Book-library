@@ -1,7 +1,8 @@
 import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/di/service_locator.dart';
-import 'package:clean_architecture/core/l10n/locale_cubit.dart';
+import 'package:clean_architecture/core/utils/cubits/locale_cubit.dart';
 import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
+import 'package:clean_architecture/core/utils/cubits/theme_cubit.dart';
 import 'package:clean_architecture/features/home/data/repos/home_repo_impl.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_books_use_case.dart'
     show FetchBooksUseCase;
@@ -10,7 +11,7 @@ import 'package:clean_architecture/features/home/domain/user_cases/fetch_newest_
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_top_rated_books_use_case.dart';
 import 'package:clean_architecture/features/home/domain/user_cases/fetch_trending_books_use_case.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/CardDotedCubit/card_doted_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/card_doted_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
@@ -19,10 +20,11 @@ import 'package:clean_architecture/features/readingProgress/presentaion/manager/
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigate_cubit.dart';
 
 List<BlocProvider> getAppBlocProviders() {
   return [
+    BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
     BlocProvider<CardDotedCubit>(create: (context) => CardDotedCubit()),
     BlocProvider<NavigateCubit>(create: (context) => NavigateCubit()),
     BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),

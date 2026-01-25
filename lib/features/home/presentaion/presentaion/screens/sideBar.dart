@@ -4,8 +4,9 @@ import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/core/utils/cache/shared_pref.dart';
+import 'package:clean_architecture/core/utils/cubits/theme_cubit.dart';
 import 'package:clean_architecture/features/auth/presentaion/manger/auth_cubit.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigate_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ class DesktopSideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 300,
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor, // لون الخلفية
@@ -34,7 +36,6 @@ class DesktopSideMenu extends StatelessWidget {
       ),
       child: ListView(
         children: [
-          // 1️⃣ الشعار أو اسم التطبيق
           Row(
             children: [
               Container(
@@ -85,7 +86,7 @@ class DesktopSideMenu extends StatelessWidget {
                       "${AppConstants.userEmailValue}",
                       style: Styles.style14(context).copyWith(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.red,
+                        color: AppColors.amber,
                       ),
                     ),
                     Text(
@@ -140,6 +141,25 @@ class DesktopSideMenu extends StatelessWidget {
             label: "الإعدادات",
             index: 4,
           ), // يمكن جعل الاندكس خارج النطاق أو معالجته
+
+          SwitchListTile(
+            title: Text("الوضع الليلي", style: Styles.style16(context)),
+            secondary: BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, state) {
+                return Icon(
+                  state == ThemeMode.dark
+                      ? Icons.dark_mode_outlined
+                      : Icons.light_mode,
+                  color: Colors.grey,
+                );
+              },
+            ),
+            value: 1 == 1,
+            onChanged: (val) {
+              context.read<ThemeCubit>().changeTheme();
+            },
+          ),
+
           _SideMenuItem(
             icon: Icons.logout_rounded,
             label: "تسجيل خروج",
@@ -177,15 +197,14 @@ class _SideMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // التحقق من العنصر النشط عبر الكيوبت
-    return BlocBuilder<NavigateCubit, NavigateState>(
+    return BlocBuilder<NavigateCubit, int>(
       builder: (context, state) {
-        bool isActive = state.selectedIndex == index;
+        bool isActive = state == index;
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: InkWell(
             onTap: () {
-              // إذا كان زر خروج لا نغير الصفحة
               if (!isDestructive) {
                 context.read<NavigateCubit>().moveToIndex(index);
               }
@@ -204,13 +223,7 @@ class _SideMenuItem extends StatelessWidget {
                   Text(
                     label,
                     style: Styles.style16(context).copyWith(
-                      color:
-                          isActive
-                              ? Colors.white
-                              : (isDestructive
-                                  ? Colors.red
-                                  : AppColors
-                                      .textPrimaryLight), // تأكد من استخدام لون مناسب للوضع الداكن هنا
+                      // تأكد من استخدام لون مناسب للوضع الداكن هنا
                       fontWeight:
                           isActive ? FontWeight.bold : FontWeight.normal,
                     ),

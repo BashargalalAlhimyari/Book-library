@@ -31,6 +31,7 @@ abstract class AppConstants {
   static const String userName = 'k_user_name';
   static const String userEmail = 'k_user_email';
   static const String isFirstTime = 'k_is_first_time';
+  static const String isDark = "isDark";
 
   //validation
   static const int minPasswordLength = 6;
@@ -52,6 +53,8 @@ abstract class AppConstants {
   static const double mobileBreakpoint = 700;
   static const double tabletBreakpoint = 1000;
 
+  // screen width and hieght
+
   static bool isMobile(BuildContext context) =>
       MediaQuery.sizeOf(context).width < mobileBreakpoint;
 
@@ -67,7 +70,7 @@ abstract class AppConstants {
   static const mobilePageFlex = 5;
   static const drawBarPageFlex = 2;
 
-  // user data 
+  // user data
   static int userIdValue =
       int.tryParse(CacheHelper.getString(key: AppConstants.userId)!)!;
   static String userNameValue =

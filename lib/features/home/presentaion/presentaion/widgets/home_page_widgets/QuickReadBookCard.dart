@@ -32,9 +32,7 @@ class _QuickReadCardState extends State<QuickReadCard> {
 
   @override
   Widget build(BuildContext context) {
-    // ⚠️ ملاحظة: لعرض 3 كتب مع صور كبيرة، يجب زيادة ارتفاع الصندوق
-    // كان 200، جعلته 280 ليكون هناك مساحة للصور
-    const double containerHeight = 280;
+    const double containerHeight = 350;
 
     const int itemsPerPage = 3;
     final int totalPages = (widget.books.length / itemsPerPage).ceil();
@@ -106,7 +104,6 @@ class BookListTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 10), // هوامش جانبية
         padding: const EdgeInsets.all(8), // مسافة داخلية
         decoration: BoxDecoration(
-          color: Colors.white, // لون الخلفية (مهم إذا لم تستخدم Card)
           borderRadius: BorderRadius.circular(12),
 
           // (اختياري) إضافة ظل خفيف

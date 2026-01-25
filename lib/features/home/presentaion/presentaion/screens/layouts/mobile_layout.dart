@@ -1,6 +1,7 @@
 import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/screens/sideBar.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/appbar_widget.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/NewBooksConsumer.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/QuickReadBooksConsumer.dart';
@@ -51,6 +52,7 @@ class _HomePage extends State<MobileLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DesktopSideMenu(),
       bottomNavigationBar:
           AppConstants.isMobile(context) ? BuildBottomNav() : null,
 
@@ -78,6 +80,23 @@ class _HomePage extends State<MobileLayout> {
           ),
           SliverToBoxAdapter(
             child: Padding(
+              padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
+              child: Text(" الكتب  المجانية", style: Styles.textStyle18),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 7),
+            sliver: SliverToBoxAdapter(child: TopRatedConsumer()),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
+              child: Text(" الكتب الجديدة", style: Styles.textStyle18),
+            ),
+          ),
+          SliverToBoxAdapter(child: Newbooksconsumer()),
+          SliverToBoxAdapter(
+            child: Padding(
               padding: EdgeInsets.fromLTRB(24, 0, 24, 10),
               child: Text("للقراءة السريعة", style: Styles.textStyle18),
             ),
@@ -87,13 +106,7 @@ class _HomePage extends State<MobileLayout> {
             padding: EdgeInsets.symmetric(horizontal: 7),
             sliver: SliverToBoxAdapter(child: Quickreadbooksconsumer()),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
-              child: Text(" الكتب الجديدة", style: Styles.textStyle18),
-            ),
-          ),
-          SliverToBoxAdapter(child: Newbooksconsumer()),
+
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.fromLTRB(24, 0, 24, 10),

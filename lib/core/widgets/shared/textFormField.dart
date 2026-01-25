@@ -1,7 +1,5 @@
-import 'package:clean_architecture/core/theme/colors.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -19,66 +17,55 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.readOnly = false,
     this.onTap,
-    this.fillColor,
+    this.fillColor, 
     this.isPassword = false,
     this.isPasswordVisible = false,
     this.suffixIcon,
+    this.suffixIconWidget,
+    this.onSuffixPressed,
   });
 
-  // المتغيرات الأساسية
   final TextEditingController controller;
   final String? hintText;
-  final String? label; // اختياري: إذا أردت عنواناً فوق الحقل
-
+  final String? label;
   final bool? isPassword;
   final bool? isPasswordVisible;
-
-  // الأيقونات
-  final IconData? prefixIcon; // أيقونة في البداية
-  final IconData? suffixIcon; // أيقونة في البداية
-
-  // التحكم والسلوك
-  final bool obscureText; // لإخفاء النص (للباسورد)
-  final String? Function(String?)? validator; // للتحقق من الأخطاء
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+  final Widget? suffixIconWidget; // في حال أردت وضع ويدجت مخصصة
+  final VoidCallback? onSuffixPressed;
+  final bool obscureText;
+  final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
-  final TextInputType keyboardType; // نوع الكيبورد (أرقام، ايميل...)
-  final TextInputAction textInputAction; // زر الكيبورد (التالي، تم...)
-
-  // التنسيق والحالات الخاصة
-  final int maxLines; // لجعله مربع نص كبير (الوصف)
-  final bool readOnly; // للقراءة فقط (مثل حقل التاريخ)
-  final VoidCallback? onTap; // عند الضغط عليه
-  final Color? fillColor; // لتغيير لون الخلفية حسب الحاجة
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final int maxLines;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
-    // تحديد الألوان بناءً على الثيم (Dark/Light)
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final outlineColor =
-        isDark ? AppColors.grey200.withOpacity(0.2) : AppColors.grey200;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 1. عنوان الحقل (اختياري)
+        // 1. العنوان (Label)
         if (label != null) ...[
           Text(
             label!,
-            style: Styles.style14(context).copyWith(
-              fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white70 : AppColors.textPrimaryLight,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
           ),
           const SizedBox(height: 8),
         ],
 
-        // 2. الحقل نفسه
+        // 2. الحقل
         TextFormField(
           controller: controller,
-
-          // الخصائص السلوكية
-          obscureText: isPassword! && !isPasswordVisible!,
+          obscureText: obscureText,
           validator: validator,
           onChanged: onChanged,
           onFieldSubmitted: onFieldSubmitted,
@@ -87,71 +74,37 @@ class CustomTextField extends StatelessWidget {
           maxLines: maxLines,
           readOnly: readOnly,
           onTap: onTap,
-          style: Styles.style16(context).copyWith(
-            color: isDark ? Colors.white : Colors.black,
-          ), // لون النص المدخل
-          // خصائص التزيين (Decoration)
+          
+          style: Theme.of(context).textTheme.bodyLarge,
+          
+          cursorColor: Theme.of(context).primaryColor,
+
           decoration: InputDecoration(
-            suffixIcon:
-                isPassword!
-                    ? IconButton(
-                      icon: Icon(
-                        isPasswordVisible!
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: onTap,
-                    )
-                    : null,
-
-            hintText: hintText,
-            hintStyle: Styles.style14(
-              context,
-            ).copyWith(color: AppColors.grey400),
-
-            // لون الخلفية
-            filled: true,
-            fillColor:
-                fillColor ??
-                (isDark ? AppColors.surfaceDark : AppColors.bgLight),
+          
+            filled: true, 
+            fillColor: fillColor, 
 
             // الأيقونات
-            prefixIcon:
-                prefixIcon != null
-                    ? Icon(prefixIcon, color: AppColors.grey400, size: 22)
-                    : null,
+            prefixIcon: prefixIcon != null
+                ? Icon(prefixIcon, size: 22) // اللون يأتي من iconTheme
+                : null,
 
-            // المسافات الداخلية
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 18,
-            ),
+            suffixIcon: isPassword == true
+                ? IconButton(
+                    icon: Icon(
+                      isPasswordVisible == true
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: onSuffixPressed,
+                  )
+                : suffixIcon != null 
+                    ? Icon(suffixIcon) 
+                    : suffixIconWidget,
 
-            // الحدود (Borders) - أهم جزء للتصميم الاحترافي
-            border: _buildBorder(outlineColor), // الحدود العادية
-            enabledBorder: _buildBorder(outlineColor), // الحدود وهو غير نشط
-            focusedBorder: _buildBorder(
-              AppColors.indigo,
-            ), // الحدود عند الكتابة (لون مميز)
-            errorBorder: _buildBorder(AppColors.red), // الحدود عند الخطأ
-            focusedErrorBorder: _buildBorder(
-              AppColors.red,
-            ), // الحدود عند الخطأ والتركيز
           ),
         ),
       ],
-    );
-  }
-
-  // دالة مساعدة لتوحيد شكل الحدود
-  OutlineInputBorder _buildBorder(Color color) {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12), // انحناء الحواف
-      borderSide: BorderSide(
-        color: color,
-        width: 1.5, // سماكة الخط
-      ),
     );
   }
 }

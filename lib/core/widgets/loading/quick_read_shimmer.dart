@@ -22,12 +22,12 @@ class QuickReadShimmer extends StatelessWidget {
   }
 
   Widget _buildShimmerItem() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
           // Image
-          const AspectRatio(
+          AspectRatio(
             aspectRatio: 2 / 3,
             child: ShimmerLoading(
               width: double.infinity,
@@ -37,22 +37,22 @@ class QuickReadShimmer extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           // Text
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ShimmerLoading(
+                ShimmerLoading(
                   width: 150,
                   height: 16,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),
                 ),
-                const SizedBox(height: 8),
-                const ShimmerLoading(
+                SizedBox(height: 8),
+                ShimmerLoading(
                   width: 200,
                   height: 12,
                   shapeBorder: RoundedRectangleBorder(

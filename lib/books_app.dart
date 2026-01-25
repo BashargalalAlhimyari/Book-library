@@ -1,10 +1,11 @@
 import 'package:clean_architecture/core/constants/app_constants.dart';
+import 'package:clean_architecture/core/utils/cubits/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/l10n/app_localizations.dart'; // تأكد من المسار
 import 'core/routes/appRouters.dart';
-import 'core/l10n/locale_cubit.dart';
+import 'core/utils/cubits/locale_cubit.dart';
 import 'core/utils/functions/app_bloc_providers.dart';
 import 'core/theme/theme.dart';
 
@@ -31,24 +32,28 @@ class _MainBooksAppState extends State<MainBooksApp> {
       providers: _providers,
       child: BlocBuilder<LocaleCubit, Locale>(
         builder: (context, locale) {
-          return MaterialApp.router(
-            title: AppConstants.appName,
-            debugShowCheckedModeBanner: false,
-            locale: locale,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale(AppConstants.englishLang),
-              Locale(AppConstants.arabicLang),
-            ],
-            routerConfig: AppRouters.routers,
-            theme: ThemeApp.lightTheme,
-            darkTheme: ThemeApp.lightTheme,
-            themeMode: ThemeMode.system,
+          return BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                title: AppConstants.appName,
+                debugShowCheckedModeBanner: false,
+                locale: locale,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale(AppConstants.englishLang),
+                  Locale(AppConstants.arabicLang),
+                ],
+                routerConfig: AppRouters.routers,
+                theme: ThemeApp.lightTheme,
+                darkTheme: ThemeApp.darkTheme,
+                themeMode: state,
+              );
+            },
           );
         },
       ),

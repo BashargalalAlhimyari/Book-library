@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/core/routes/appRouters.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
+import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class NewBookPaginatedGrid extends StatelessWidget {
 
     // تحديد ارتفاع مناسب للـ PageView ليتسع للـ 3 صفوف
     // يمكنك تعديل هذا الارتفاع حسب حجم بطاقة الكتاب الذي تريده
-    final double containerHeight = MediaQuery.of(context).size.height * 0.4;
 
     if (books.isEmpty) {
       return const SizedBox(
@@ -79,7 +79,6 @@ class NewBookPaginatedGrid extends StatelessWidget {
   }
 }
 
-// تصميم بطاقة الكتاب المناسب للشبكة
 class BookCardGridItem extends StatelessWidget {
   const BookCardGridItem({super.key, required this.book});
   final BookEntity book;
@@ -96,47 +95,80 @@ class BookCardGridItem extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // الصورة
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      (book.images?.isNotEmpty ?? false)
-                          ? book.images![0]
-                          : "https://via.placeholder.com/150", // صورة افتراضية
-                  fit: BoxFit.cover,
-                  placeholder:
-                      (context, url) => const Center(
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-              ),
-            ),
-            // العنوان
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                book.title ?? "بدون عنوان",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          // ظل للكارد بالكامل ليعطيه بروز
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
+        ),
+        // ClipRRect لقص الصورة والظل والنص داخل الحواف الدائرية
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            fit: StackFit.expand, // يجعل الصورة تملأ المساحة بالكامل
+            children: [
+              // 1. الصورة (في الخلفية)
+              CachedNetworkImage(
+                imageUrl:
+                    (book.images?.isNotEmpty ?? false)
+                        ? book.images![0]
+                        : "https://via.placeholder.com/150",
+                fit: BoxFit.cover, // Cover أفضل لملء الفراغ بدون تمطيط
+                placeholder:
+                    (context, url) => const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                errorWidget:
+                    (context, url, error) => Container(
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.broken_image, color: Colors.grey),
+                    ),
+              ),
+
+              // 2. طبقة التدرج اللوني (Gradient Overlay)
+              // هذه الطبقة ضرورية جداً لكي يظهر النص الأبيض بوضوح
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 60, // ارتفاع الظل
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.8), // أسود غامق في الأسفل
+                        Colors.transparent, // شفاف في الأعلى
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // 3. النص (فوق التدرج)
+              Positioned(
+                bottom: 8, // مسافة من الأسفل
+                left: 8, // مسافة من اليسار
+                right: 8, // مهم جداً: يمنع النص من الخروج عن الإطار يميناً
+                child: Text(
+                  book.title ?? "عنوان غير معروف",
+                  maxLines: 1, // سطرين كحد أقصى
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center, // توسيط النص (اختياري)
+                  style: Styles.style12(context).copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.2, // تباعد أسطر مريح
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

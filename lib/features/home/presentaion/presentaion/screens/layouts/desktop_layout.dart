@@ -1,6 +1,6 @@
 import 'package:clean_architecture/core/constants/app_constants.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart'; // تأكد من المسار
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigate_cubit.dart'; // تأكد من المسار
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/screens/details_page.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/screens/sideBar.dart';
@@ -44,14 +44,14 @@ class DesktopLayout extends StatelessWidget {
                 child: _buildSection(
                   context,
                   // هنا نستمع لتغيير الصفحة من السايد بار
-                  child: BlocBuilder<NavigateCubit, NavigateState>(
+                  child: BlocBuilder<NavigateCubit, int>(
                     builder: (context, state) {
                       // بناءً على الاندكس المختار، نعرض الصفحة المناسبة
-                      if (state.selectedIndex == 0) {
+                      if (state == 0) {
                         return const MobileLayout(); // صفحة الكتب
-                      } else if (state.selectedIndex == 1) {
+                      } else if (state == 1) {
                         return const Center(child: Text("صفحة البحث")); // مثال
-                      } else if (state.selectedIndex == 2) {
+                      } else if (state == 2) {
                         return const Center(child: Text("مكتبتي")); // مثال
                       } else {
                         return const Center(child: Text("الإعدادات"));
@@ -68,10 +68,10 @@ class DesktopLayout extends StatelessWidget {
               // ====================================================
               // هذه المنطقة تظهر فقط إذا كنا في الصفحة الرئيسية (index == 0)
               // أو يمكن تركها فارغة في الصفحات الأخرى
-              BlocBuilder<NavigateCubit, NavigateState>(
+              BlocBuilder<NavigateCubit, int>(
                 builder: (context, state) {
                   // إذا لم نكن في الصفحة الرئيسية، نخفي لوحة التفاصيل
-                  if (state.selectedIndex != 0) {
+                  if (state != 0) {
                     return const SizedBox(); 
                   }
                   

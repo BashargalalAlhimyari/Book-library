@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:clean_architecture/core/theme/styles.dart';
 
 import 'package:clean_architecture/core/theme/colors.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigationCubit/navigate_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/navigate_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +11,7 @@ class BuildBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRect(
       child: Container(
-        height: 90,
+        height: 70,
         decoration: BoxDecoration(
           color:
               Theme.of(context).brightness == Brightness.light
@@ -21,7 +21,7 @@ class BuildBottomNav extends StatelessWidget {
             top: BorderSide(color: Colors.black.withOpacity(0.05)),
           ),
         ),
-        child: BlocBuilder<NavigateCubit, NavigateState>(
+        child: BlocBuilder<NavigateCubit, int>(
           builder: (context, state) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -67,7 +67,7 @@ class BuildBottomNavItem extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    bool isActive = context.read<NavigateCubit>().state.selectedIndex == index;
+    bool isActive = context.read<NavigateCubit>().state == index;
     return GestureDetector(
       onTap: () => context.read<NavigateCubit>().moveToIndex(index),
       child: Column(

@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/CardDotedCubit/card_doted_cubit.dart';
+import 'package:clean_architecture/features/home/presentaion/presentaion/manager/card_doted_cubit.dart';
 import 'package:clean_architecture/features/readingProgress/domain/entity/reading_progress_entity.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/widget/bannerCardBody.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/widget/dotttedIndicator.dart';

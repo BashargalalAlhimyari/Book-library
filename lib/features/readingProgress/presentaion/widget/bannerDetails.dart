@@ -17,16 +17,15 @@ class BannerDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      print("🔵 Fetched from local cache: ${lastReadBook.book}");
-      print("🔵 Fetched from local cache: ${lastReadBook.totalPages}");
-          print("🔵 Fetched from local cache: $progressValue");
-          print("🔵 Fetched from local cache: $progressValue");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          "Continue Reading", // Translated "استكمل القراءة"
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+
+          "Continue Reading",
           style: TextStyle(color: Colors.white70, fontSize: 12),
         ),
         const SizedBox(height: 4),
@@ -46,6 +45,9 @@ class BannerDetails extends StatelessWidget {
 
         // Author
         Text(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+
           (lastReadBook.book?.authors != null &&
                   lastReadBook.book!.authors!.isNotEmpty)
               ? lastReadBook.book!.authors![0]
