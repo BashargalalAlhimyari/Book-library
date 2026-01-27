@@ -77,4 +77,49 @@ abstract class AppConstants {
       CacheHelper.getString(key: AppConstants.userName)!;
   static String userEmailValue =
       CacheHelper.getString(key: AppConstants.userEmail)!;
+
+  //color dark matrix for pdf viewer
+  static const colorFilter = ColorFilter.matrix([
+    -1,
+    0,
+    0,
+    0,
+    255,
+    0,
+    -1,
+    0,
+    0,
+    255,
+    0,
+    0,
+    -1,
+    0,
+    255,
+    0,
+    0,
+    0,
+    1,
+    0,
+  ]);
+
+  //Grid view rows and columns
+  static int getGridViewRows(BuildContext context) {
+    if (isMobile(context)) {
+      return 3;
+    } else if (isTablet(context)) {
+      return 3;
+    } else {
+      return 3;
+    }
+  }
+
+  static int getGridViewColumns(BuildContext context) {
+    if (isMobile(context)) {
+      return 3;
+    } else if (isTablet(context)) {
+      return 4;
+    } else {
+      return 5;
+    }
+  }
 }

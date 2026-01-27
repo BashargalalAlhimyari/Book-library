@@ -46,26 +46,22 @@ class _BuildHorizontalListviewCardState extends State<Topratedbookcard> {
 
   @override
   Widget build(BuildContext context) {
-    // 1. الحصول على أبعاد الشاشة
+    
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // 2. حساب عرض الكارت وارتفاع القائمة بناءً على الجهاز
     double cardWidth;
     double listHeight;
 
-    if (screenWidth < 600) {
-      // موبايل: العرض 35% من الشاشة، الارتفاع 32% من الشاشة (لكن بحد أدنى وأقصى)
+    if (AppConstants.isMobile(context)) {
       cardWidth = screenWidth * 0.30;
       listHeight = (screenHeight * 0.28).clamp(240.0, 320.0);
-    } else if (screenWidth < 900) {
-      // تابلت: العرض 22%
-      cardWidth = screenWidth * 0.17;
-      listHeight = 300.0;
+    } else if (AppConstants.isTablet(context)) {
+      cardWidth = screenWidth * 0.13;
+      listHeight = 250.0;
     } else {
-      // ديسكتوب: عرض ثابت لمنع الصور العملاقة
-      cardWidth = 200.0;
-      listHeight = 380.0;
+      cardWidth = screenWidth * 0.13;
+      listHeight = 250.0;
     }
 
     return SizedBox(
@@ -134,8 +130,8 @@ class BookCard extends StatelessWidget {
                       children: [
                         CachedNetworkImage(
                           imageUrl:
-                              (book.images?.isNotEmpty ?? false)
-                                  ? book.images![0]
+                              (book.images.isNotEmpty)
+                                  ? book.images[0]
                                   : AppAssets.testImage,
                           fit: BoxFit.cover,
                           placeholder:
@@ -190,7 +186,7 @@ class BookCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  "${book.averageRating ?? "4.0"}", // You can map this to book.averageRating later
+                                  "${book.averageRating}", // You can map this to book.averageRating later
 
                                   style: TextStyle(
                                     color: Colors.white,
@@ -234,7 +230,7 @@ class BookCard extends StatelessWidget {
                   // Author
                   Flexible(
                     child: Text(
-                      book.authors?.first ?? "Unknown Author",
+                      book.authors.first,
                       style: Styles.style14(context).copyWith(
                         color: Colors.grey[600],
                         fontSize: _getResponsiveFontSize(context, 12),

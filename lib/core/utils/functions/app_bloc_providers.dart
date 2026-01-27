@@ -16,7 +16,9 @@ import 'package:clean_architecture/features/home/presentaion/presentaion/manager
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/newsBooksCubit/news_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/trendingBooks/trendin_books_cubit.dart';
+import 'package:clean_architecture/features/pdfViewer/precentation/manager/cubit/pdf_search_state_cubit.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
+import 'package:clean_architecture/features/search/precentation/manager/search_books/search_books_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/selected_book_cubit.dart';
 
@@ -46,6 +48,9 @@ List<BlocProvider> getAppBlocProviders() {
     ),
     BlocProvider<QuickReadBooksCubit>(
       create: (context) => getIt.get<QuickReadBooksCubit>()..fetchQuickBooks(),
+    ),
+    BlocProvider<SearchBooksCubit>(
+      create: (context) => getIt.get<SearchBooksCubit>()..fetchSearchBooks(),
     ),
     BlocProvider<ReadingProgressCubit>(
       create:

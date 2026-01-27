@@ -1,9 +1,6 @@
 import 'package:clean_architecture/core/widgets/loading/quick_read_shimmer.dart';
-import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/manager/quick_read_books_cubit/quick_read_books_cubit_cubit.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/manager/topRatedBooksCubit/top_rated_books_cubit.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/QuickReadBookCard.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/TopRatedBookCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

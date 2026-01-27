@@ -8,7 +8,6 @@ import 'package:clean_architecture/features/home/presentaion/presentaion/widgets
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/TopRatedConsumer.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/home_page_widgets/TrendingBooksConsumer.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/widgets/navigationBar.dart';
-import 'package:clean_architecture/features/readingProgress/presentaion/widget/BannerCard.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/widget/BannerCardConsumer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

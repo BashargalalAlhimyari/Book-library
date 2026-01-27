@@ -23,6 +23,11 @@ import 'package:clean_architecture/features/readingProgress/data/data_course/rea
 import 'package:clean_architecture/features/readingProgress/data/repo/reading_progress_repo_impl.dart';
 import 'package:clean_architecture/features/readingProgress/domain/repo/reading_progress_repo.dart';
 import 'package:clean_architecture/features/readingProgress/presentaion/manager/reading_progress/reading_progress_cubit.dart';
+import 'package:clean_architecture/features/search/data/data_source/remote_search_books.dart';
+import 'package:clean_architecture/features/search/data/repo/search_books_repo.dart';
+import 'package:clean_architecture/features/search/domain/repo/search_book_repo.dart';
+import 'package:clean_architecture/features/search/domain/useCasees/search_book_use_case.dart';
+import 'package:clean_architecture/features/search/precentation/manager/search_books/search_books_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -137,5 +142,28 @@ void setupServiceLocator() {
       saveReadingProgressUseCase: getIt(),
       getLastReadBookUseCase: getIt(),
     ),
+  );
+
+  //========================================================
+  //Search Book Page
+  //========================================================
+
+  // data sourse
+  getIt.registerLazySingleton<RemoteSearchBooks>(
+    () => RemoteSearchBooksImp(apiService: getIt()),
+  );
+  //Repo
+  getIt.registerLazySingleton<SearchBooksRepo>(
+    () => SearchBooksRepoImp(remoteSearchBooks: getIt()),
+  );
+
+  // Use case
+  getIt.registerLazySingleton<FetchSearchBooksUseCase>(
+    () => FetchSearchBooksUseCase(getIt<SearchBooksRepo>()),
+  );
+
+  //Cubit
+  getIt.registerLazySingleton<SearchBooksCubit>(
+    () => SearchBooksCubit(getIt()),
   );
 }

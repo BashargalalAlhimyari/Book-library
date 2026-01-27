@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clean_architecture/core/constants/app_constants.dart';
-import 'package:clean_architecture/core/routes/appRouters.dart';
 import 'package:clean_architecture/core/routes/paths_routes.dart';
 import 'package:clean_architecture/core/theme/styles.dart';
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
@@ -14,20 +13,15 @@ class NewBookPaginatedGrid extends StatelessWidget {
   final List<BookEntity> books;
 
   // إعدادات الشبكة
-  final int rows = 3; // عدد الصفوف المطلوبة
-  final int columns = 3; // عدد الأعمدة المطلوبة
 
   @override
   Widget build(BuildContext context) {
     // 1. حساب عدد العناصر في الصفحة الواحدة
-    final int itemsPerPage = rows * columns;
+    final int itemsPerPage =
+        AppConstants.getGridViewRows(context) *
+        AppConstants.getGridViewColumns(context);
 
-    // 2. حساب العدد الكلي للصفحات
-    // (مثلاً لو عندنا 20 كتاب، والصفحة تسع 9، سنحتاج 3 صفحات)
     final int totalPages = (books.length / itemsPerPage).ceil();
-
-    // تحديد ارتفاع مناسب للـ PageView ليتسع للـ 3 صفوف
-    // يمكنك تعديل هذا الارتفاع حسب حجم بطاقة الكتاب الذي تريده
 
     if (books.isEmpty) {
       return const SizedBox(
@@ -63,7 +57,9 @@ class NewBookPaginatedGrid extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(10),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: columns, // عدد الأعمدة (3)
+              crossAxisCount: AppConstants.getGridViewColumns(
+                context,
+              ), // عدد الأعمدة (3)
               childAspectRatio: 0.9, // نسبة العرض للطول (تحكم في شكل البطاقة)
               crossAxisSpacing: 10, // مسافة أفقية بين الكتب
               mainAxisSpacing: 10, // مسافة عمودية بين الكتب

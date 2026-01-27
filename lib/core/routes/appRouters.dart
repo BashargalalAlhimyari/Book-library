@@ -7,7 +7,8 @@ import 'package:clean_architecture/features/auth/presentaion/views/sign_up.dart'
 import 'package:clean_architecture/features/home/domain/entity/book_entity.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/screens/details_page.dart';
 import 'package:clean_architecture/features/home/presentaion/presentaion/screens/home_page.dart';
-import 'package:clean_architecture/features/home/presentaion/presentaion/screens/pdf_viewer_page.dart';
+import 'package:clean_architecture/features/pdfViewer/precentation/pdf_viewer_page.dart';
+import 'package:clean_architecture/features/search/precentation/search_page.dart';
 import 'package:clean_architecture/features/splash/presentaion/views/spalsh_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,6 +39,10 @@ abstract class AppRouters {
       GoRoute(
         path: Routes.homePage,
         builder: (context, state) =>  HomePage(),
+      ),
+      GoRoute(
+        path: Routes.searchBooks,
+        builder: (context, state) =>  SearchPage(),
       ),
       GoRoute(
         path: Routes.detailsPage,

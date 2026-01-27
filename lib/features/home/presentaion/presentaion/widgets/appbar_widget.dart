@@ -60,7 +60,7 @@ class AppbarSection extends StatelessWidget {
                 context,
                 icon: Icons.search_rounded,
                 onTap: () {
-                  // GoRouter.of(context).push('/search');
+                  GoRouter.of(context).push('/search');
                 },
               ),
 

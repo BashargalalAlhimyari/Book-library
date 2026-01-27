@@ -7,7 +7,7 @@ import 'package:clean_architecture/features/home/domain/repos/home_repo.dart';
 class FetchBooksUseCase extends UseCase<BooksList, int> {
   final HomeRepo _homeRepo;
 
-  FetchBooksUseCase(this._homeRepo);
+    FetchBooksUseCase(this._homeRepo);
 
   @override
   ResultFuture<BooksList> call([int param = AppConstants.itemsPerPage]) async {
