@@ -33,8 +33,19 @@ class SearchBooksConsumer extends StatelessWidget {
           return const Center(
             child: Icon(Icons.error, size: 50, color: Colors.yellow),
           );
+        } else if (state is SearchBooksInitial) {
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.search, size: 80, color: Colors.grey),
+                SizedBox(height: 16),
+                Text("Search for books...", style: TextStyle(color: Colors.grey, fontSize: 18)),
+              ],
+            ),
+          );
         } else {
-          return CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

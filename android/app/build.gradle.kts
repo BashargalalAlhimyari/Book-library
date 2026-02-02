@@ -42,3 +42,10 @@ android {
 flutter {
     source = "../.."
 }
+dependencies {
+    // ... أسطر أخرى قد تكون هنا ...
+
+    // 👇 هذا السطر هو المسؤول عن تعريف الكود الجديد، بدونه سيفشل البناء
+    implementation("com.google.mlkit:face-detection:16.1.5")
+    implementation("com.google.android.gms:play-services-mlkit-face-detection:17.1.0")
+}

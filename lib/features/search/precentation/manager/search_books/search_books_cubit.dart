@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:clean_architecture/features/search/domain/entity/search_books_entity.dart';
-import 'package:clean_architecture/features/search/domain/useCasees/search_book_use_case.dart';
+import 'package:clean_architecture/features/search/domain/useCasees/search_book_use_case.dart'; // تأكد من الاسم useCases
 
 part 'search_books_cubit_state.dart';
 
@@ -8,15 +8,31 @@ class SearchBooksCubit extends Cubit<SearchBooksCubitState> {
   SearchBooksCubit(this.fetchSearchBooksUseCase) : super(SearchBooksInitial());
   final FetchSearchBooksUseCase fetchSearchBooksUseCase;
 
-
-  // 1. المتغيرات الداخلية (State Management)
-  int _nextPage = 0; // نبدأ من 0 كما اتفقنا
+  // 1. المتغيرات الداخلية
+  // 1. المتغيرات الداخلية
+  int _nextPage = 0;
   bool _isLoading = false;
-  String _query = ' ';
-  final List<SearchBooksEntity> _allBooks = []; // القائمة التراكمية
+  final List<SearchBooksEntity> _allBooks = [];
+  String _currentQuery = "";
 
+  // --- دالة البحث الجديدة (تستدعى عند الكتابة) ---
+  void search(String query) {
+    _currentQuery = query; // Update current query
+    if (query.isEmpty) {
+      _currentQuery = "";
+      _allBooks.clear();
+      _nextPage = 0;
+      emit(SearchBooksInitial());
+      return;
+    }
+    _nextPage = 0; // تصفير الصفحة
+    _allBooks.clear(); // مسح النتائج القديمة
+    // لا نحتاج للتحقق من is_Loading هنا لأننا نريد إلغاء البحث القديم وبدء جديد
+    fetchSearchBooks();
+  }
+
+  // --- دالة جلب البيانات (تستدعى للبحث وللـ Pagination) ---
   Future<void> fetchSearchBooks() async {
-    // حماية من التكرار
     if (_isLoading) return;
     _isLoading = true;
 
@@ -27,8 +43,9 @@ class SearchBooksCubit extends Cubit<SearchBooksCubitState> {
       emit(SearchBooksPaginationLoading(books: List.from(_allBooks)));
     }
 
-    // استدعاء اليوزكيس بالصفحة الحالية
-    final result = await fetchSearchBooksUseCase.call(FetchSearchBooksParams(pageNumber: _nextPage, query: _query));
+    final result = await fetchSearchBooksUseCase.call(
+      FetchSearchBooksParams(pageNumber: _nextPage, query: _currentQuery),
+    );
 
     result.fold(
       (failure) {
@@ -39,7 +56,7 @@ class SearchBooksCubit extends Cubit<SearchBooksCubitState> {
           emit(
             SearchBooksPaginationFailure(
               errMessage: failure.message,
-              books: List.from(_allBooks),
+              books: List.from(_allBooks), // نحافظ على الكتب القديمة
             ),
           );
         }
@@ -47,26 +64,21 @@ class SearchBooksCubit extends Cubit<SearchBooksCubitState> {
       (books) {
         _isLoading = false;
 
-        // التحقق من نهاية البيانات
+        // 🌟 تعديل مهم: إذا كانت القائمة فارغة في أول صفحة، نعرض أنها فارغة
+        if (books.isEmpty && _nextPage == 0) {
+          _allBooks.clear(); // للتأكيد
+          emit(SearchBooksSuccess(books: [])); // قائمة فارغة للواجهة
+          return;
+        }
+
+        // إذا كانت فارغة في الصفحات التالية (وصلنا للنهاية)
         if (books.isEmpty) return;
 
-        // 2. دمج البيانات (القديم + الجديد) 🌟 هذا هو السطر الأهم
         _allBooks.addAll(books);
+        _nextPage++; // تجهيز الصفحة التالية
 
-        // زيادة الصفحة للمرة القادمة
-        _nextPage++;
-
-        // إرسال القائمة الكاملة للواجهة
         emit(SearchBooksSuccess(books: List.from(_allBooks)));
       },
     );
   }
-
-
 }
-
-
-
-
-
-

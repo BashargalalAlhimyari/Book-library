@@ -25,8 +25,6 @@ class AuthCubit extends Cubit<AuthState> {
       user,
     ) async {
     
-
-   
       await TokenStorage.saveToken(user.token);
       await CacheHelper.saveData(
         key: AppConstants.userName,

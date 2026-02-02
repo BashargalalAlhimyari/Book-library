@@ -59,7 +59,7 @@ class _HomePage extends State<MobileLayout> {
         controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         slivers: const [
-          SliverToBoxAdapter(child: AppbarSection(isDark: true)),
+          SliverToBoxAdapter(child: AppbarSection()),
 
           // Challenge Card
           SliverPadding(
